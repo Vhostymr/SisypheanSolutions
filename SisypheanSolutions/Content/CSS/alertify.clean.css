@@ -1,0 +1,166 @@
+﻿#alertify,
+.alertify-logs .alertify-log {
+	-webkit-transition: all 350ms ease;
+	   -moz-transition: all 350ms ease;
+	    -ms-transition: all 350ms ease;
+	     -o-transition: all 350ms ease;
+	        transition: all 350ms ease;
+}
+ 
+.alertify, .alertify-log {
+    font-family: inherit;
+}
+ 
+.alertify {
+    background: #fefefe;
+    background: rgba(253, 253, 253, 0.98);
+    border: 8px solid #222;
+    border: 8px solid rgba(0, 0, 0, .9);
+    border-radius: 0;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, .3);
+    -webkit-background-clip: padding; /* Safari 4? Chrome 6? */
+    -moz-background-clip: padding; /* Firefox 3.6 */
+    background-clip: padding-box; /* Firefox 4, Safari 5, Opera 10, IE 9 */
+}
+ 
+.alertify-text {
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #555;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    background-image: none;
+}
+ 
+    .alertify-text:focus {
+        border-color: #66afe9;
+        outline: 0;
+    }
+ 
+.alertify .alertify-button,
+.alertify .alertify-button:hover,
+.alertify .alertify-button:active {
+    outline: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    background-image: none;
+    background: white;
+    text-shadow: none;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    border: 1px solid #cacaca;
+    color: #555;
+    -webkit-box-shadow: 0 2px 3px rgba(0,0,0,.02);
+    -moz-box-shadow: 0 2px 3px rgba(0,0,0,.02);
+    box-shadow: 0 2px 3px rgba(0,0,0,.02);
+}
+ 
+.alertify-cover {
+    filter: alpha(opacity=70);
+    opacity: .7;
+}
+ 
+    /* Default buttons */
+    .alertify-button:focus {
+        border-color: #66afe9;
+    }
+    .alertify .alertify-button:hover {
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        border-color: #ddd;
+        color: #888;
+    }
+    .alertify .alertify-button:active {
+        -webkit-box-shadow: 0 2px 3px rgba(0,0,0,.05) inset;
+        -moz-box-shadow: 0 2px 3px rgba(0,0,0,.05) inset;
+        box-shadow: 0 2px 3px rgba(0,0,0,.05) inset;
+    }
+ 
+    /* Danger buttons */
+    .alertify-button.alertify-button-danger {
+        -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, .07);
+        -moz-box-shadow: 0 3px 3px rgba(0, 0, 0, .07);
+        box-shadow: 0 3px 3px rgba(0, 0, 0, .07);
+        background: #db5151;
+        color: white;
+        border-color: #b17d7d;
+    }
+    .alertify-button.alertify-button-danger:hover {
+        background: #ec6262;
+        border-color: #c28e8e;
+        color: white;
+    }
+    .alertify-button.alertify-button-danger:focus {
+        border-color: white;
+    }
+    .alertify-button.alertify-button-danger:active {
+        background: #EC6252;
+        color: white;
+        box-shadow: 0 2px 3px rgba(0,0,0,.15) inset;
+    }
+ 
+.alertify-log {
+    background: #222;
+    background: rgba(0, 0, 0, .85);
+    padding: 15px;
+    border-radius: 4px;
+    color: white;
+    text-shadow: none;
+    max-height: 100%;
+}
+    .alertify-log a {
+        color: #69c;
+        text-decoration: none;
+    }
+        .alertify-log a:hover {
+            color: #8be;
+            text-decoration: none;
+        }
+.alertify-log-error {
+    background: rgba(150, 20, 20, .95);
+}
+    .alertify-log-error a {
+        color: #f99;
+    }
+        .alertify-log-error a:hover {
+            color: #fcc;
+        }
+.alertify-log-success {
+    background: rgba(30, 110, 20, .85);
+}
+    .alertify-log-success a {
+        color: #ac9;
+    }
+        .alertify-log-success a:hover {
+            color: #cfb;
+        }
+ 
+.alertify-inner {
+    font-size: 14px;
+}

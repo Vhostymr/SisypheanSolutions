@@ -1,0 +1,119 @@
+﻿body {
+    font-size: 14px;
+}
+
+#content {
+    min-height: 350px;
+}
+
+.footer-container {
+    display: block;
+    width: 85%;
+    margin: auto;
+}
+
+h1, h2, h3 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: lighter;
+}
+
+h4, h5, h6 {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.margin-bottom {
+    margin-bottom: 10px;
+}
+
+.navbar-inverse {
+    background-color: #41414E;
+    border: none;
+}
+
+.navbar-inverse .navbar-nav > li {
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.navbar-inverse .navbar-nav > li:hover {
+    background-color: #39B6D2;
+}
+
+.navbar-inverse .navbar-nav > li > a{
+    color: #CACACA;
+}
+
+.navbar-offset-top {
+    margin-top: 75px;
+}
+
+.navbar-offset-bottom {
+    margin-top: 50px;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@media (max-width:767px)
+{
+    #content {
+        min-height: inherit;
+    }
+}
+
+/***************************
+    Global Error CSS
+****************************/
+
+.error-heading {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    font-size: 64px;
+    text-align: center;
+    color: #03244d;
+}
+
+.error-body {
+    margin-bottom: 1.5em;
+    font-size: 28px;
+    text-align: center;
+    color: #496e9c;
+}
+
+@media (max-width:767px)
+{
+    .error-heading {
+        margin-top: inherit;
+        font-size: 48px;
+        text-align: center;
+        color: #03244d;
+    }
+
+    .error-body {
+        font-size: 24px;
+        text-align: center;
+        color: #496e9c;
+    }
+}
+
+@media (max-width:530px)
+{
+    .error-heading {
+        margin-top: inherit;
+        font-size: 32px;
+        text-align: center;
+        color: #03244d;
+    }
+
+    .error-body {
+        font-size: 18px;
+        text-align: center;
+        color: #496e9c;
+    }
+}

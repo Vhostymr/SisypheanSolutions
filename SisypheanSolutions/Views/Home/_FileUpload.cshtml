@@ -1,0 +1,60 @@
+﻿<div id="file-upload-section" class="container">
+    @using (Html.BeginForm("FileUpload", "File", FormMethod.Post, new { id = "file-upload-form", enctype = "multipart/form-data" }))
+    {
+        <div class="input-group margin-bottom">
+            <span class="input-group-btn">
+                <span class="btn btn-primary btn-file">
+                    Browse… <input id="browse" type="file" name="files" multiple="multiple">
+                </span>
+            </span>
+
+            <input id="filefeedback" type="text" class="form-control" readonly="">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-submit has-spinner" style="margin-right:1em; width:89px;">
+            <span id="uploadGlyph" class="glyphicon glyphicon-upload"></span>
+            Upload
+        </button>
+    }
+</div>
+<script>
+    $(function () {
+        $(document).on('change', '.btn-file :file', function () {
+            var names = [];
+            var input = $(this),
+                numFiles = input.get(0).files ? input.get(0).files.length : 1;
+
+            for (var i = 0; i < numFiles; ++i) {
+                names.push(" " + $(this).get(0).files[i].name);
+            }
+
+            $("#filefeedback").val(names);
+        });
+
+        $('#file-upload-form').submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: '/File/FileUpload/',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function (data) {
+                    if (data.success) {
+                        alertify.success("File(s) successfully uploaded.");
+                    }
+
+                    else {
+                        var i;
+                        for (i = 0; i < data.errors.length; i++) {
+                            alertify.error(data.errors[i]);
+                        }
+                    }
+                }
+            });
+        });
+    });
+</script>
