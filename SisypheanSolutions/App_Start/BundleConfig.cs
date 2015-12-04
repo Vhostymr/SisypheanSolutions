@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace MySite
+namespace SisypheanSolutions
 {
     public class BundleConfig
     {
@@ -25,7 +25,10 @@ namespace MySite
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include("~/Scripts/alertify.min.js"));
 
-            bundles.Add(new StyleBundle("~/Content/CSS").Include("~/Content/CSS/*.css", "~/Content/CSS/*.min.css"));
+            bundles.Add(new StyleBundle("~/bundles/styles")
+                   .Include("~/Content/CSS/*.css",
+                            "~/Content/CSS/bootstrap.min.css",
+                            "~/Content/CSS/bootstrap.min.css.map"));
         }
     }
 }

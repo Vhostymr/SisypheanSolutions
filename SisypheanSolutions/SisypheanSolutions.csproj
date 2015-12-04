@@ -175,7 +175,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\CSS\bootstrap-theme.min.css" />
     <Content Include="Content\CSS\bootstrap.min.css" />
     <Content Include="Content\CSS\alertify.clean.css" />
     <Content Include="Content\CSS\alertify.core.css" />
@@ -185,7 +184,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\alertify.min.js" />
-    <Content Include="Content\CSS\bootstrap-theme.min.css.map" />
     <Content Include="Content\CSS\bootstrap.min.css.map" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.ttf" />
@@ -253,7 +251,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59521</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

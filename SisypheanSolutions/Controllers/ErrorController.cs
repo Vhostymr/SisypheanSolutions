@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace MySite.Controllers
+namespace SisypheanSolutions.Controllers
 {
     public class ErrorController : Controller
     {

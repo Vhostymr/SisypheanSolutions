@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Text;
 
-namespace MySite.Controllers
+namespace SisypheanSolutions.Controllers
 {
     public class FileController : Controller
     {
