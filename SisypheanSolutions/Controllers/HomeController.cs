@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SisypheanSolutions.Controllers
+namespace MySite.Controllers
 {
     public class HomeController : Controller
     {
@@ -13,18 +13,24 @@ namespace SisypheanSolutions.Controllers
             return View();
         }
 
+        public ActionResult Home()
+        {
+            return PartialView("_Home");
+        }
+
+        public ActionResult FileManager()
+        {
+            return PartialView("_FileUpload");
+        }
+
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            return PartialView("_About");
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return PartialView("_Contact");
         }
     }
 }

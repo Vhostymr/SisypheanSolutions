@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace SisypheanSolutions
+namespace MySite
 {
     public class BundleConfig
     {
@@ -9,7 +9,7 @@ namespace SisypheanSolutions
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -23,9 +23,9 @@ namespace SisypheanSolutions
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+            bundles.Add(new ScriptBundle("~/bundles/scripts").Include("~/Scripts/alertify.min.js"));
+
+            bundles.Add(new StyleBundle("~/Content/CSS").Include("~/Content/CSS/*.css", "~/Content/CSS/*.min.css"));
         }
     }
 }
