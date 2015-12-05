@@ -1,7 +1,7 @@
 ﻿$(function () {
     var currentURL = window.location.href;
 
-    if (currentURL.toLowerCase().indexOf("file") >= 0) {
+    if (currentURL.toLowerCase().indexOf("filemanager") >= 0) {
         var url = "/Home/FileManager";
         GetPartial(url);
     }
