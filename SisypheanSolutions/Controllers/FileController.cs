@@ -63,7 +63,7 @@ namespace SisypheanSolutions.Controllers
         }
 
         [HttpPost]
-        public ActionResult FileUpload(HttpPostedFileBase[] files, string password = "a")
+        public ActionResult FileUpload(HttpPostedFileBase[] files, string password = "")
         {
             try
             {

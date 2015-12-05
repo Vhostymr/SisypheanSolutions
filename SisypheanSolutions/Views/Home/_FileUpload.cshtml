@@ -1,20 +1,36 @@
 ﻿<div id="file-upload-section" class="container">
+    <h2>File Manager<br /><small>The easy way to securely email or share files.</small></h2>
     @using (Html.BeginForm("FileUpload", "File", FormMethod.Post, new { id = "file-upload-form", enctype = "multipart/form-data" }))
     {
-        <div class="input-group margin-bottom">
-            <span class="input-group-btn">
-                <span class="btn btn-primary btn-file">
-                    Browse… <input id="browse" type="file" name="files" multiple="multiple">
-                </span>
-            </span>
-
-            <input id="filefeedback" type="text" class="form-control" readonly="">
+        <div class="row margin-bottom">
+            <div class="col-sm-6">
+                <input id="encrypted" name="encrypted" type="checkbox" />
+                <label for="encrypted"><span>Encrypted</span></label>
+            </div>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-submit has-spinner" style="margin-right:1em; width:89px;">
-            <span id="uploadGlyph" class="glyphicon glyphicon-upload"></span>
-            Upload
-        </button>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="input-group margin-bottom">
+                    <span class="input-group-btn">
+                        <span class="btn btn-info btn-file">
+                            Browse… <input id="browse" type="file" name="files" multiple="multiple">
+                        </span>
+                    </span>
+
+                    <input id="filefeedback" type="text" class="form-control" readonly="">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-info btn-submit has-spinner" style="margin-right:1em; width:89px;">
+                    <span id="uploadGlyph" class="glyphicon glyphicon-upload"></span>
+                    Upload
+                </button>
+            </div>
+        </div>
     }
 </div>
 <script>
@@ -33,8 +49,73 @@
 
         $('#file-upload-form').submit(function (e) {
             e.preventDefault();
+
+            if (document.getElementById('browse').files.length === 0)
+            {
+                alertify.error('Please select a file or files to be uploaded.');
+                return;
+            }
+
             var formData = new FormData(this);
 
+            if (document.getElementById('encrypted').checked)
+            {
+                var dialogBox = new BootstrapDialog({
+                    title: "Share File(s)",
+                    message: 'Please enter a password to encrypt your file(s), and be sure to remember it to decrypt them later. <br/><br/> ' +
+                             '<input id="modal-input-password" type="password" class="form-control" placeholder="Password" /> <br/>' +
+                             '<input id="modal-input-confirm" type="password" class="form-control" placeholder="Confirm Password" />',
+                    cssClass: 'dialog-modal',
+                    closable: true,
+                    onshown: function () {
+                        $('#modal-input').focus();
+                    },
+                    buttons: [{
+                        label: 'Upload',
+                        cssClass: 'btn-info',
+                        hotkey: 13,
+                        action: function (dialogBox) {
+                            if ($('#modal-input-password').val() === $('#modal-input-confirm').val())
+                            {
+                                if ($('#modal-input-password').val() === "") {
+                                    alertify.error('Please enter a password to encrypt, or press cancel and uncheck "Encrypted".');
+                                }
+
+                                else {
+                                    formData.append("password", $('#modal-input-password').val());
+                                    ajaxPost(formData);
+
+                                    $.each(BootstrapDialog.dialogs, function (id, dialogBox) {
+                                        dialogBox.close();
+                                    });
+                                }
+                            }
+
+                            else {
+                                alertify.error('Password and Confirm Password do not match.');
+                            }
+                        }
+                    }, {
+                        label: 'Cancel',
+                        hotkey: 27,
+                        action: function (dialogBox) {
+                            $.each(BootstrapDialog.dialogs, function (id, dialogBox) {
+                                dialogBox.close();
+                            });
+                        }
+
+                    }]
+                });
+                dialogBox.setType(BootstrapDialog.TYPE_INFO);
+                dialogBox.open();
+            }
+
+            else {
+                ajaxPost(formData);
+            }
+        });
+
+        function ajaxPost(formData) {
             $.ajax({
                 url: '/File/FileUpload/',
                 data: formData,
@@ -44,7 +125,7 @@
                 type: 'POST',
                 success: function (data) {
                     if (data.success) {
-                        alertify.success("File(s) successfully uploaded.");
+                        alertify.success("Your file(s) have been successfully uploaded.");
                     }
 
                     else {
@@ -55,6 +136,6 @@
                     }
                 }
             });
-        });
+        }
     });
 </script>

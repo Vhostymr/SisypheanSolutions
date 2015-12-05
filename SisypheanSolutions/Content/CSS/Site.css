@@ -2,8 +2,8 @@
     font-size: 14px;
 }
 
-#content {
-    min-height: 350px;
+.body-content {
+    min-height: 450px;
 }
 
 .footer-container {
@@ -14,7 +14,7 @@
 
 h1, h2, h3 {
     font-family: 'Open Sans', sans-serif;
-    font-weight: lighter;
+    margin-bottom: 30px;
 }
 
 h4, h5, h6 {
@@ -36,7 +36,7 @@ h4, h5, h6 {
 }
 
 .navbar-inverse .navbar-nav > li:hover {
-    background-color: #39B6D2;
+    background-color: #5bc0de;
 }
 
 .navbar-inverse .navbar-nav > li > a{

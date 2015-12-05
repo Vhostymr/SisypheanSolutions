@@ -23,12 +23,13 @@ namespace SisypheanSolutions
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/scripts").Include("~/Scripts/alertify.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/scripts").Include("~/Scripts/alertify.min.js", "~/Scripts/bootstrap-dialog.min.js"));
 
             bundles.Add(new StyleBundle("~/bundles/styles")
-                   .Include("~/Content/CSS/*.css",
-                            "~/Content/CSS/bootstrap.min.css",
-                            "~/Content/CSS/bootstrap.min.css.map"));
+                   .Include("~/Content/CSS/bootstrap.min.css",
+                            "~/Content/CSS/bootstrap.min.css.map",
+                            "~/Content/CSS/bootstrap-dialog.min.css",
+                            "~/Content/CSS/*.css"));
         }
     }
 }
