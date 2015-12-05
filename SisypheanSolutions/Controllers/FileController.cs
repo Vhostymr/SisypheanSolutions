@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
 using System.IO;
@@ -67,21 +68,60 @@ namespace SisypheanSolutions.Controllers
         {
             try
             {
-                List<string> fileList = new List<string>();
+                Guid uniqueID = Guid.NewGuid();
+                string link = GenerateDownloadLink(uniqueID);
 
-                foreach (var file in files)
+                //More than one file, probably should be zipped.
+                if (files.Length > 1)
                 {
-                    byte[] fileBytes = FileToByteArray(file);
+                    using (var compressedFileStream = new MemoryStream())
+                    {
+                        //Create an archive and store the stream in memory.
+                        using (var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Update, false))
+                        {
+                            foreach (var file in files)
+                            {
+                                //Create a zip entry for each attachment.
+                                var zipEntry = zipArchive.CreateEntry(file.FileName);
+
+                                byte[] fileBytes = FileToByteArray(file);
+
+                                //Get the stream of the attachment
+                                using (var originalFileStream = new MemoryStream(fileBytes))
+                                {
+                                    using (var zipEntryStream = zipEntry.Open())
+                                    {
+                                        //Copy the attachment stream to the zip entry stream
+                                        originalFileStream.CopyTo(zipEntryStream);
+                                    }
+                                }
+                            }
+
+                        }
+
+                        byte[] zipBytes = compressedFileStream.ToArray();
+                        string fileName = "BundledArchive.zip";
+                        if (password != "")
+                        {
+                            zipBytes = EncryptFile(zipBytes, password);
+                            fileName = fileName + EncryptedExtension();
+                        }
+
+                        SaveFile(uniqueID, fileName, zipBytes);
+                    }
+                }
+
+                //Doesn't need zipping.
+                else
+                {
+                    byte[] fileBytes = FileToByteArray(files[0]);
 
                     if (password != "")
                     {
-                        EncryptFile(file.FileName, fileBytes, password);
+                        fileBytes = EncryptFile(fileBytes, password);
                     }
 
-                    else
-                    {
-                        SaveFile(file.FileName, fileBytes);
-                    }
+                    SaveFile(uniqueID, files[0].FileName, fileBytes);
                 }
 
                 return Json(new { success = true });
@@ -95,20 +135,12 @@ namespace SisypheanSolutions.Controllers
         }
 
         #region Encryption
-        private string EncryptFile(string fileName, byte[] bytesToBeEncrypted, string password)
+        private byte[] EncryptFile(byte[] bytesToBeEncrypted, string password)
         {
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
 
-            byte[] encryptedBytes = AES_Encrypt(bytesToBeEncrypted, passwordBytes);
-
-            Guid uniqueID = Guid.NewGuid();
-
-            string encryptedFile = GetFileLocation() + uniqueID + "." + fileName + EncryptedExtension();
-
-            System.IO.File.WriteAllBytes(encryptedFile, encryptedBytes);
-
-            return uniqueID.ToString();
+            return AES_Encrypt(bytesToBeEncrypted, passwordBytes);
         }
 
         private byte[] DecryptFile(string path, string password)
@@ -217,8 +249,7 @@ namespace SisypheanSolutions.Controllers
 
         private string GetFileLocation()
         {
-            string location = "D:\\EncryptedFiles\\";
-            return location;
+            return "D:\\EncryptedFiles\\";
         }
 
         private string EncryptedExtension()
@@ -238,17 +269,26 @@ namespace SisypheanSolutions.Controllers
             return fileData;
         }
 
-        private void SaveFile(string fileName, byte[] fileBytes)
+        private void SaveFile(Guid uniqueID, string fileName, byte[] fileBytes)
         {
-            Guid uniqueID = Guid.NewGuid();
-            string fileLocation = GetFileLocation() + uniqueID + "." + fileName;
+            string fileLocation = GetPath(uniqueID, fileName);
 
             System.IO.File.WriteAllBytes(fileLocation, fileBytes);
+        }
+
+        private string GetPath(Guid uniqueID, string fileName)
+        {
+            return GetFileLocation() + uniqueID + "." + fileName;
         }
 
         private ActionResult ReturnFile(string fileName, byte[] fileBytes)
         {
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+        private static string GenerateDownloadLink(Guid uniqueID)
+        {
+            return "~/Home/FileDownload/" + uniqueID;
         }
         #endregion
     }

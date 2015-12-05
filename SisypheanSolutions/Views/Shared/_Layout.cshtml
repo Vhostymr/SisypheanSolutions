@@ -9,78 +9,48 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li id="home"><a>Home</a></li>
-                    <li id="file-manager"><a>File Manager</a></li>
-                    <li id="about"><a>About</a></li>
-                    <li id="contact"><a>Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="navbar-offset-top body-content">
-        @RenderBody()
-    </div>
-
-    <div class="container-fluid">
-        <div class="footer-container">
-            <div class="footer">
-                <hr />
-                <footer>
-                    <p>&copy; @DateTime.Now.Year Brandon Hurler</p>
-                </footer>
+    <div class="routing">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="home"><a>Home</a></li>
+                        <li class="file-manager"><a>File Manager</a></li>
+                        <li class="about"><a>About</a></li>
+                        <li class="contact"><a>Contact</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
+
+        <div class="navbar-offset-top body-content">
+            @RenderBody()
+        </div>
+
+        <div class="container-fluid">
+            <div class="footer-container">
+                <div class="footer">
+                    <hr />
+                    <footer>
+                        <p>&copy; @DateTime.Now.Year Brandon Hurler</p>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+        @RenderSection("scripts", required: false)
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/scripts")
     </div>
-
-    @RenderSection("scripts", required: false)
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/scripts")
-
-    <script>
-        $(function () {
-            $('#home').on('click', function () {
-                var url = "/Home/Home";
-                $.get(url, function(data) {
-                    $('#main-content').html(data);
-                });
-            });
-
-            $('#file-manager').on('click', function () {
-                var url = "/Home/FileManager";
-                $.get(url, function (data) {
-                    $('#main-content').html(data);
-                });
-            });
-
-            $('#about').on('click', function () {
-                var url = "/Home/About";
-                $.get(url, function(data) {
-                    $('#main-content').html(data);
-                });
-            });
-
-            $('#contact').on('click', function () {
-                var url = "/Home/Contact";
-                $.get(url, function(data) {
-                    $('#main-content').html(data);
-                });
-            });
-        });
-    </script>
 </body>
 </html>
