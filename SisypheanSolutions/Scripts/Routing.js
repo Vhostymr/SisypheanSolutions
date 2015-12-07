@@ -6,6 +6,11 @@
         GetPartial(url);
     }
 
+    else if (currentURL.toLowerCase().indexOf("location") >= 0) {
+        var url = "/Home/FileDownload";
+        GetPartial(url);
+    }
+
     else if (currentURL.toLowerCase().indexOf("about") >= 0) {
         var url = "/Home/About";
         GetPartial(url);

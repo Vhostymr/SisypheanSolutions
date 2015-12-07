@@ -22,6 +22,10 @@ namespace SisypheanSolutions.Controllers
         {
             return PartialView("_FileUpload");
         }
+        public ActionResult FileDownload()
+        {
+            return PartialView("_FileDownload");
+        }
 
         public ActionResult About()
         {

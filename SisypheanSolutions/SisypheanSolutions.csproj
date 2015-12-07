@@ -227,7 +227,7 @@
     <Content Include="Views\Error\InternalServer.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\File\_DownloadError.cshtml" />
-    <Content Include="Views\File\_FileDownload.cshtml" />
+    <Content Include="Views\Home\_FileDownload.cshtml" />
     <Content Include="Views\Home\_About.cshtml" />
     <Content Include="Views\Home\_Contact.cshtml" />
     <Content Include="Views\Home\_FileUpload.cshtml" />

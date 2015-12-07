@@ -27,30 +27,46 @@ namespace SisypheanSolutions.Controllers
 
                 if (path.EndsWith(EncryptedExtension()))
                 {
-                    return PartialView("_FileDownload");
+                    return RedirectToAction("Index", "Home", new { location = "filedownload", fileID = uniqueID });
                 }
 
                 else
                 {
                     byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+
                     return ReturnFile(fileName, fileBytes);
                 }
             }
 
             catch
             {
-                return PartialView("_DownloadError");
+                //Actually, return file not found whenever you get around to it.
+                return RedirectToAction("Index", "Home", new { location = "filedownload", id = uniqueID });
             }
         }
 
+        /// <summary>
+        /// This method is the for the file download post, which is only encrypted files, as they need a password.
+        /// </summary>
+        /// <param name="uniqueID">The guid that causes uniqueness for the files.</param>
+        /// <param name="password">The password used to decrypt the files.</param>
+        /// <returns>Returns the file if found or an error.</returns>
         [HttpPost]
-        public ActionResult FileDownload(string uniqueID, string password)
+        public ActionResult FileDownload(string uniqueID, string password = "a")
         {
             try
             {
                 var files = Directory.GetFiles(GetFileLocation());
                 string path = files.FirstOrDefault(item => item.Contains(uniqueID));
                 string fileName = GetFileName(path);
+
+                fileName = DecryptString(fileName, password);
+
+                if (!fileName.Contains(EncryptedExtension()))
+                {
+                    string[] errors = { "The password entered is incorrect. Please try again." };
+                    return Json(new { success = false, errors});
+                }
 
                 byte[] decryptedBytes = DecryptFile(path, password);
 
@@ -101,11 +117,16 @@ namespace SisypheanSolutions.Controllers
 
                         byte[] zipBytes = compressedFileStream.ToArray();
                         string fileName = "BundledArchive.zip";
+
+                        //The extension is added twice. Once for password checking, once for file.
                         if (password != "")
                         {
                             zipBytes = EncryptFile(zipBytes, password);
                             fileName = fileName + EncryptedExtension();
                         }
+
+                        fileName = EncryptString(fileName, password);
+                        fileName = fileName + EncryptedExtension();
 
                         SaveFile(uniqueID, fileName, zipBytes);
                     }
@@ -115,13 +136,17 @@ namespace SisypheanSolutions.Controllers
                 else
                 {
                     byte[] fileBytes = FileToByteArray(files[0]);
-
+                    string fileName = files[0].FileName;
                     if (password != "")
                     {
+                        //The extension is added twice. Once for password checking, once for file.
+                        fileName = fileName + EncryptedExtension();
                         fileBytes = EncryptFile(fileBytes, password);
+                        fileName = EncryptString(files[0].FileName, password);
+                        fileName = fileName + EncryptedExtension();
                     }
 
-                    SaveFile(uniqueID, files[0].FileName, fileBytes);
+                    SaveFile(uniqueID, fileName, fileBytes);
                 }
 
                 return Json(new { success = true });
@@ -153,6 +178,36 @@ namespace SisypheanSolutions.Controllers
             byte[] bytesDecrypted = AES_Decrypt(bytesToBeDecrypted, passwordBytes);
 
             return bytesDecrypted;
+        }
+
+        public string EncryptString(string input, string password)
+        {
+            // Get the bytes of the string
+            byte[] bytesToBeEncrypted = Encoding.UTF8.GetBytes(input);
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+
+            // Hash the password with SHA256
+            passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
+
+            byte[] bytesEncrypted = AES_Encrypt(bytesToBeEncrypted, passwordBytes);
+
+            string encryptedString = Convert.ToBase64String(bytesEncrypted);
+
+            return encryptedString;
+        }
+
+        public string DecryptString(string input, string password)
+        {
+            // Get the bytes of the string
+            byte[] bytesToBeDecrypted = Convert.FromBase64String(input);
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+            passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
+
+            byte[] bytesDecrypted = AES_Decrypt(bytesToBeDecrypted, passwordBytes);
+
+            string decryptedString = Encoding.UTF8.GetString(bytesDecrypted);
+
+            return decryptedString;
         }
 
         private byte[] AES_Encrypt(byte[] bytesToBeEncrypted, byte[] passwordBytes)
@@ -233,30 +288,69 @@ namespace SisypheanSolutions.Controllers
 
         #region Private Methods
 
+        /// <summary>
+        /// Gets just the name of the file, minus the path and extension, from a string.
+        /// </summary>
+        /// <param name="file">The file name.</param>
+        /// <returns>Returns the file name without the path and extension.</returns>
         private string GetFileName(string file)
         {
             int delimiterIndex = file.IndexOf('.', 0);
 
             string fileName = file.Substring(delimiterIndex + 1);
 
+            fileName = RemoveExtension(fileName, EncryptedExtension());
+
+            return fileName;
+        }
+
+        /// <summary>
+        /// Removes the extension on the end of a file.
+        /// </summary>
+        /// <param name="fileName">The file name to have the extension removed.</param>
+        /// <returns>Returns the file name without the extension.</returns>
+        private string RemoveExtension(string fileName, string extension)
+        {
             if (fileName.EndsWith(EncryptedExtension()))
             {
-                fileName = fileName.Substring(0, fileName.Length - EncryptedExtension().Length);
+                fileName = fileName.Substring(0, fileName.Length - extension.Length);
             }
 
             return fileName;
         }
 
+        /// <summary>
+        /// Provides the current location of file storage.
+        /// </summary>
+        /// <returns>Returns a string containing the current file save location data. Useful to change once.</returns>
         private string GetFileLocation()
         {
             return "D:\\EncryptedFiles\\";
         }
 
+        /// <summary>
+        /// Provides the encrypted extension.
+        /// </summary>
+        /// <returns>Returns the encrypted extension. Useful if the type ever needs to be changed or added to.</returns>
         private string EncryptedExtension()
         {
             return ".encrypted";
         }
 
+        /// <summary>
+        /// Provides the zip extension.
+        /// </summary>
+        /// <returns>Returns the zip extension. Useful if the type ever needs to be changed or added to.</returns>
+        private string ZipExtension()
+        {
+            return ".zip";
+        }
+
+        /// <summary>
+        /// Accepts a file and converts it into a byte array.
+        /// </summary>
+        /// <param name="file">The file to be converted.</param>
+        /// <returns>Returns the data in a byte array.</returns>
         private byte[] FileToByteArray(HttpPostedFileBase file)
         {
             byte[] fileData = null;
@@ -269,6 +363,12 @@ namespace SisypheanSolutions.Controllers
             return fileData;
         }
 
+        /// <summary>
+        /// Writes a file to the location generated from the file name and data.
+        /// </summary>
+        /// <param name="uniqueID">The unique ID of the file.</param>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="fileBytes">The file data.</param>
         private void SaveFile(Guid uniqueID, string fileName, byte[] fileBytes)
         {
             string fileLocation = GetPath(uniqueID, fileName);
@@ -276,16 +376,33 @@ namespace SisypheanSolutions.Controllers
             System.IO.File.WriteAllBytes(fileLocation, fileBytes);
         }
 
+        /// <summary>
+        /// Gets the full path of the file: location + file name.
+        /// </summary>
+        /// <param name="uniqueID">The ID of the file being looked for.</param>
+        /// <param name="fileName">The name of the file being looked for.</param>
+        /// <returns>Returns the path of the file.</returns>
         private string GetPath(Guid uniqueID, string fileName)
         {
             return GetFileLocation() + uniqueID + "." + fileName;
         }
 
+        /// <summary>
+        /// Gets the file object from the bytes, name, and extension.
+        /// </summary>
+        /// <param name="fileName">The file name.</param>
+        /// <param name="fileBytes">The file data.</param>
+        /// <returns>Returns the file.</returns>
         private ActionResult ReturnFile(string fileName, byte[] fileBytes)
         {
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 
+        /// <summary>
+        /// Generates the URL for the file download from the uniqueID parameter.
+        /// </summary>
+        /// <param name="uniqueID">The unique ID associated with the file download.</param>
+        /// <returns>Returns a URL as a string.</returns>
         private static string GenerateDownloadLink(Guid uniqueID)
         {
             return "~/Home/FileDownload/" + uniqueID;
