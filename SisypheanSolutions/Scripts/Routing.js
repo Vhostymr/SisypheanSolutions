@@ -1,7 +1,7 @@
 ﻿$(function () {
     var currentURL = window.location.href;
 
-    if (currentURL.toLowerCase().indexOf("filemanager") >= 0) {
+    if (currentURL.toLowerCase().indexOf("file-manager") >= 0) {
         var url = "/Home/FileManager";
         GetPartial(url);
     }
@@ -21,6 +21,11 @@
         GetPartial(url);
     }
 
+    else if (currentURL.toLowerCase().indexOf("news-feed") >= 0) {
+        var url = "/Home/News";
+        GetPartial(url);
+    }
+
     else {
         var url = "/Home/Home";
         GetPartial(url);
@@ -33,6 +38,11 @@
 
     $('.routing').on('click', '.file-manager', function () {
         var url = "/Home/FileManager";
+        GetPartial(url);
+    });
+
+    $('.routing').on('click', '.news-feed', function () {
+        var url = "/Home/News";
         GetPartial(url);
     });
 

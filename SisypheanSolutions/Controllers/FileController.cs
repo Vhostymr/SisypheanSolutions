@@ -27,7 +27,7 @@ namespace SisypheanSolutions.Controllers
 
                 if (path.EndsWith(EncryptedExtension()))
                 {
-                    return RedirectToAction("Index", "Home", new { location = "filedownload", fileID = uniqueID });
+                    return RedirectToAction("Index", "Home", new { location = "filedownload", uniqueID = uniqueID });
                 }
 
                 else
@@ -52,20 +52,18 @@ namespace SisypheanSolutions.Controllers
         /// <param name="password">The password used to decrypt the files.</param>
         /// <returns>Returns the file if found or an error.</returns>
         [HttpPost]
-        public ActionResult FileDownload(string uniqueID, string password = "a")
+        public ActionResult FileDownload(string uniqueID, string password = "")
         {
             try
             {
                 var files = Directory.GetFiles(GetFileLocation());
                 string path = files.FirstOrDefault(item => item.Contains(uniqueID));
-                string fileName = GetFileName(path);
-
+                string fileName = Base64Decode(GetFileName(path));
                 fileName = DecryptString(fileName, password);
 
                 if (!fileName.Contains(EncryptedExtension()))
                 {
-                    string[] errors = { "The password entered is incorrect. Please try again." };
-                    return Json(new { success = false, errors});
+                    //Return not found
                 }
 
                 byte[] decryptedBytes = DecryptFile(path, password);
@@ -76,6 +74,35 @@ namespace SisypheanSolutions.Controllers
             catch
             {
                 return PartialView("_DownloadError");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ValidateDownload(string uniqueID, string password)
+        {
+            try
+            {
+                var files = Directory.GetFiles(GetFileLocation());
+                var path = files.FirstOrDefault(item => item.Contains(uniqueID));
+                var fileName = Base64Decode(GetFileName(path));
+                fileName = DecryptString(fileName, password);
+
+                if (fileName.Contains(EncryptedExtension()))
+                {
+                    return Json(new { success = true });
+                }
+
+                else
+                {
+                    string[] errors = { "The password entered is incorrect. Please try again." };
+                    return Json(new { success = false, errors });
+                }
+            }
+
+            catch (CryptographicException)
+            {
+                string[] errors = { "The password entered is incorrect. Please try again." };
+                return Json(new { success = false, errors });
             }
         }
 
@@ -123,10 +150,9 @@ namespace SisypheanSolutions.Controllers
                         {
                             zipBytes = EncryptFile(zipBytes, password);
                             fileName = fileName + EncryptedExtension();
+                            fileName = Base64Encode(EncryptString(fileName, password));
+                            fileName = fileName + EncryptedExtension();
                         }
-
-                        fileName = EncryptString(fileName, password);
-                        fileName = fileName + EncryptedExtension();
 
                         SaveFile(uniqueID, fileName, zipBytes);
                     }
@@ -142,7 +168,7 @@ namespace SisypheanSolutions.Controllers
                         //The extension is added twice. Once for password checking, once for file.
                         fileName = fileName + EncryptedExtension();
                         fileBytes = EncryptFile(fileBytes, password);
-                        fileName = EncryptString(files[0].FileName, password);
+                        fileName = Base64Encode(EncryptString(fileName, password));
                         fileName = fileName + EncryptedExtension();
                     }
 
@@ -152,7 +178,7 @@ namespace SisypheanSolutions.Controllers
                 return Json(new { success = true });
             }
 
-            catch
+            catch (Exception e)
             {
                 string[] errors = { "There was an error when processing your files. Please try re-uploading." };
                 return Json(new { success = false, errors });
@@ -311,7 +337,7 @@ namespace SisypheanSolutions.Controllers
         /// <returns>Returns the file name without the extension.</returns>
         private string RemoveExtension(string fileName, string extension)
         {
-            if (fileName.EndsWith(EncryptedExtension()))
+            if (fileName.EndsWith(extension))
             {
                 fileName = fileName.Substring(0, fileName.Length - extension.Length);
             }
@@ -395,7 +421,24 @@ namespace SisypheanSolutions.Controllers
         /// <returns>Returns the file.</returns>
         private ActionResult ReturnFile(string fileName, byte[] fileBytes)
         {
+            if(fileName.EndsWith(EncryptedExtension()))
+            {
+                fileName = RemoveExtension(fileName, EncryptedExtension());
+            }
+
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+            return Convert.ToBase64String(plainTextBytes);
+        }
+
+        public static string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
+            return Encoding.UTF8.GetString(base64EncodedBytes);
         }
 
         /// <summary>

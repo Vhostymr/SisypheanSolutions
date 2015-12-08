@@ -1,7 +1,50 @@
-﻿<div id="file-download">
-    <h2>File Download</h2>
-    <p>It appears you are trying to download a file that has been encrypted. Please provide the password for the file to unencrypt and download.</p>
+﻿<div id="file-download" class="container">
+    <h2>File Download <br />
+        <small>
+            It appears you are trying to download a file that has been encrypted. <br /> 
+            Please provide the password for the file to unencrypt and download.
+        </small>
+    </h2>
+    <div class="row">
+        <div class="col-sm-6">
+            @using (Html.BeginForm("FileDownload", "File", FormMethod.Post, new { @id="file-form" }))
+            {
+                <input id="file" name="uniqueID" readonly class="form-control" /><br />
+                <input id="password" name="password" type="password" class="form-control" placeholder="Password" /><br />
 
-    <input id="file" readonly class="form-control" />
-    <input type="password" class="form-control"/>
+                <input id="submit-button" type="button" class="btn btn-info" value="Download" />
+            }
+        </div>
+    </div>
 </div>
+
+<script>
+    $(function () {
+        var fileID = getParameterByName('uniqueID');
+        $('#file').val(fileID);
+
+        $('#submit-button').on('click', function () {
+            var url = '/File/ValidateDownload';
+            
+            $.post(url, { uniqueID: fileID, password: $('#password').val() }, function (data) {
+                if (data.success) {
+                    $('#file-form').submit();
+                }
+
+                else {
+                    var i;
+                    for (i = 0; i < data.errors.length; i++) {
+                        alertify.error(data.errors[i]);
+                    }
+                }
+            });
+        });
+
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+    });
+</script>
