@@ -66,23 +66,23 @@
         about.run('#/about');
         contact.run('#/contact');
 
-        $('.home').on('click', function () {
+        $('#main-content').on('click', '.home', function () {
             NavigateToURL('');
         });
 
-        $('.file-manager').on('click', function () {
+        $('#main-content').on('click', '.file-manager', function () {
             NavigateToURL('file-manager');
         });
 
-        $('.news-feed').on('click', function () {
+        $('#main-content').on('click', '.news-feed', function () {
             NavigateToURL('news-feed');
         });
 
-        $('.about').on('click', function () {
+        $('#main-content').on('click', '.about', function () {
             NavigateToURL('about');
         });
 
-        $('.contact').on('click', function () {
+        $('#main-content').on('click', '.contact', function () {
             NavigateToURL('contact');
         });
     });
