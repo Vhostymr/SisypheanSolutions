@@ -5,7 +5,6 @@
             GetPartial(url);
             SetActive('.home');
         });
-
     });
 
     var news = $.sammy('#main-content', function (data) {
