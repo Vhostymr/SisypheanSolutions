@@ -178,7 +178,7 @@ namespace SisypheanSolutions.Controllers
                 return Json(new { success = true });
             }
 
-            catch (Exception e)
+            catch (Exception)
             {
                 string[] errors = { "There was an error when processing your files. Please try re-uploading." };
                 return Json(new { success = false, errors });

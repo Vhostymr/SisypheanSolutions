@@ -26,6 +26,7 @@ namespace SisypheanSolutions
             bundles.Add(new ScriptBundle("~/bundles/scripts")
                    .Include("~/Scripts/alertify.min.js", 
                             "~/Scripts/bootstrap-dialog.min.js",
+                            "~/Scripts/sammy.min.js",
                             "~/Scripts/Routing.js"));
 
             bundles.Add(new StyleBundle("~/bundles/styles")
