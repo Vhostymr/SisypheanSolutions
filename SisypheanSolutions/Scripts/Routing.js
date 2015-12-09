@@ -68,22 +68,27 @@
 
         $('.routing').on('click', '.home', function () {
             NavigateToURL('');
+            $('div.navbar-collapse').removeClass('in');
         });
 
         $('.routing').on('click', '.file-manager', function () {
             NavigateToURL('file-manager');
+            $('div.navbar-collapse').removeClass('in');
         });
 
         $('.routing').on('click', '.news-feed', function () {
             NavigateToURL('news-feed');
+            $('div.navbar-collapse').removeClass('in');
         });
 
         $('.routing').on('click', '.about', function () {
             NavigateToURL('about');
+            $('div.navbar-collapse').removeClass('in');
         });
 
         $('.routing').on('click', '.contact', function () {
             NavigateToURL('contact');
+            $('div.navbar-collapse').removeClass('in');
         });
     });
 
