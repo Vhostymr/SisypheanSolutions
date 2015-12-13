@@ -8,8 +8,8 @@
 
 .btn-primary {
     background-color: #00B2CA;
-    min-width: 50px;
-    border: 2px solid transparent;
+    min-width: 100px;
+    border: 1px solid transparent;
 }
 
 .btn-primary:hover,
@@ -18,8 +18,8 @@
 .btn-primary:active:focus, 
 .btn-primary:active:hover {
     background-color: #009cb1;
-    min-width: 50px;
-    border: 2px solid transparent;
+    min-width: 100px;
+    border: 1px solid transparent;
 }
 
 .footer-container {
@@ -35,6 +35,12 @@ h1, h2, h3 {
 h4, h5, h6 {
     font-family: 'Open Sans', sans-serif;
 }
+
+label {
+    font-size: 17px;
+    font-weight: lighter;
+}
+
 .margin-top {
     margin-top: 30px;
 }
@@ -57,11 +63,11 @@ h4, h5, h6 {
 
 .navbar-inverse .navbar-nav > li.active {
     background-color: #41414E;
-    border-bottom: 5px solid #00b2ca;
+    border-bottom: 5px solid #00B2CA;
 }
 
 .navbar-inverse .navbar-nav > li:hover {
-    border-bottom: 5px solid #00b2ca;
+    border-bottom: 5px solid #00B2CA;
 }
 
 .navbar-inverse .navbar-nav > li > a {

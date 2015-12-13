@@ -1,7 +1,6 @@
 ﻿<div id="file-upload-section" class="container">
     <h2>File Manager<br /><small>The easy way to securely share files.</small></h2>
-    @using (Html.BeginForm("FileUpload", "File", FormMethod.Post, new { id = "file-upload-form", enctype = "multipart/form-data" }))
-    {
+    <form id="file-upload-form" action="/file/fileupload" method="post" enctype="multipart/form-data">
         <div class="row margin-bottom">
             <div class="col-sm-6">
                 <input id="encrypted" name="encrypted" type="checkbox" />
@@ -25,13 +24,13 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <button type="submit" class="btn btn-primary btn-submit has-spinner" style="margin-right:1em; width:89px;">
+                <button id="submit-button" type="button" class="btn btn-primary btn-submit has-spinner" style="margin-right:1em; width:89px;">
                     <span id="uploadGlyph" class="glyphicon glyphicon-upload"></span>
                     Upload
                 </button>
             </div>
         </div>
-    }
+    </form>
 </div>
 <script>
     $(function () {
@@ -47,8 +46,8 @@
             $("#filefeedback").val(names);
         });
 
-        $('#file-upload-form').submit(function (e) {
-            e.preventDefault();
+        $('#submit-button').on('click', function () {
+            var form = $('file-upload-form').serialize();
 
             if (document.getElementById('browse').files.length === 0)
             {
@@ -56,7 +55,14 @@
                 return;
             }
 
-            var formData = new FormData(this);
+            var formData = new FormData();
+            var length = document.getElementById('browse').files.length;
+            var files = document.getElementById('browse').files;
+            var i;
+            for (i = 0; i < length; i++)
+            {
+                formData.append("files[" + i + "]", files[i]);
+            }
 
             if (document.getElementById('encrypted').checked)
             {

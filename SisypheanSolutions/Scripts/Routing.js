@@ -39,6 +39,14 @@
         });
     });
 
+    var filedownload = $.sammy('#main-content', function (data) {
+        this.get('#/file/filedownload', function (context) {
+            var url = "/File/FileDownload";
+            GetPartial(url);
+            SetActive('.file-manager');
+        });
+    });
+
     function GetPartial(url) {
         $.get(url, function (data) {
             $('#main-content').html(data);
@@ -64,6 +72,7 @@
         file.run('#/file-manager');
         about.run('#/about');
         contact.run('#/contact');
+        filedownload.run('#/file/filedownload');
 
         $('.routing').on('click', '.home', function () {
             NavigateToURL('');
