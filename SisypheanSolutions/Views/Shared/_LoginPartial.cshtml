@@ -1,22 +1,28 @@
-﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
-{
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
-    @Html.AntiForgeryToken()
+﻿<link href="@Url.Content("~/Content/CSS/Login.css")" rel="stylesheet" />
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
-    }
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
-}
+<div class="login">
+    <h2 class="active login-heading pointer"> sign in </h2>
+
+    <h2 class="inactive login-heading pointer"> sign up </h2>
+    <form>
+        <span class="login-text">Username</span>
+        <input type="text" class="text" name="username">
+
+        <br />
+
+        <span class="login-text">Password</span>
+        <input type="password" class="text" name="password">
+
+        <br />
+        <div class="absolute">
+            <input id="sign-in-checkbox" type="checkbox" class="custom-checkbox" />
+            <label for="sign-in-checkbox" class="label-format">Keep me signed in</label>
+        </div>
+
+        <button class="signin">Sign In</button>
+
+        <hr>
+
+        <a href="#">Forgot Password?</a>
+    </form>
+</div>

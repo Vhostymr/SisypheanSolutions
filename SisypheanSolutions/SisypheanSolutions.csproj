@@ -178,18 +178,19 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\CSS\bootstrap-dialog.min.css" />
-    <Content Include="Content\CSS\bootstrap.min.css" />
-    <Content Include="Content\CSS\alertify.clean.css" />
-    <Content Include="Content\CSS\alertify.core.css" />
-    <Content Include="Content\CSS\Checkbox.css" />
+    <Content Include="Content\CSS\Core\bootstrap-dialog.min.css" />
+    <Content Include="Content\CSS\Core\bootstrap.min.css" />
+    <Content Include="Content\CSS\Core\alertify.clean.css" />
+    <Content Include="Content\CSS\Core\alertify.core.css" />
+    <Content Include="Content\CSS\Core\Checkbox.css" />
     <Content Include="Content\CSS\FileUpload.css" />
-    <Content Include="Content\CSS\Site.css" />
+    <Content Include="Content\CSS\Core\Site.css" />
+    <Content Include="Content\CSS\Login.css" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\alertify.min.js" />
-    <Content Include="Content\CSS\bootstrap.min.css.map" />
+    <Content Include="Content\CSS\Core\bootstrap.min.css.map" />
     <Content Include="Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />

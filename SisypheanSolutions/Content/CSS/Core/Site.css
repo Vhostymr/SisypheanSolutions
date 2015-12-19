@@ -1,4 +1,8 @@
-﻿body {
+﻿.absolute {
+    position: absolute;
+}
+
+body {
     font-size: 14px;
 }
 
@@ -10,6 +14,7 @@
     background-color: #00B2CA;
     min-width: 100px;
     border: 1px solid transparent;
+    transition: all 0.2s ease-in-out;
 }
 
 .btn-primary:hover,
@@ -98,6 +103,10 @@ label {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 @media (max-width:767px)

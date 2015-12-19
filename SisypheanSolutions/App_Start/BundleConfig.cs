@@ -30,10 +30,10 @@ namespace SisypheanSolutions
                             "~/Scripts/Routing.js"));
 
             bundles.Add(new StyleBundle("~/bundles/styles")
-                   .Include("~/Content/CSS/bootstrap.min.css",
-                            "~/Content/CSS/bootstrap.min.css.map",
-                            "~/Content/CSS/bootstrap-dialog.min.css",
-                            "~/Content/CSS/*.css"));
+                   .Include("~/Content/CSS/Core/bootstrap.min.css",
+                            "~/Content/CSS/Core/bootstrap.min.css.map",
+                            "~/Content/CSS/Core/bootstrap-dialog.min.css",
+                            "~/Content/CSS/Core/*.css"));
         }
     }
 }
