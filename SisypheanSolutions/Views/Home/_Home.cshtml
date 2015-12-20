@@ -1,7 +1,27 @@
 ﻿<style>
+    .background-container {
+        min-height: 450px;
+        margin-top: -30px;
+        width: 100%;
+    }
+
     .col-md-4 {
         position: relative;
         height: 250px;
+    }
+
+    .jumbotron {
+        max-width: 750px;
+        opacity: 0.8;
+        margin: auto;
+        margin-top: 5em;
+    }
+
+    .home-background {
+        background: url(./../Content/Images/Background.jpg) no-repeat center;
+        background-size: cover;
+        min-height: 450px;
+        width: 100%;
     }
 
     .more {
@@ -9,12 +29,17 @@
         bottom: 0;
     }
 </style>
-<div class="container">
-    <div class="jumbotron">
-        <h1>Sisyphean Solutions</h1>
-        <p class="lead">This is a personal project of mine used to provide simple services, such as file sharing and more.</p>
+<div class="container-fluid">
+    <div class="row background-container">
+        <div class="home-background absolute">
+            <div class="jumbotron relative">
+                <h1>Sisyphean Solutions</h1>
+                <p class="lead">This is a personal project of mine used to provide simple services, such as file sharing and more.</p>
+            </div>
+        </div>
     </div>
-
+</div>
+<div class="container margin-top">
     <div class="row">
         <div class="col-md-4">
             <h2>File Manager</h2>
