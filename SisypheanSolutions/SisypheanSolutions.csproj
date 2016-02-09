@@ -186,7 +186,7 @@
     <Content Include="Content\CSS\FileUpload.css" />
     <Content Include="Content\CSS\Core\Site.css" />
     <Content Include="Content\CSS\Login.css" />
-    <Content Include="Content\Images\Background.jpg" />
+    <Content Include="Content\Images\Background.png" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

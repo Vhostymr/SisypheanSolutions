@@ -1,4 +1,6 @@
-﻿.absolute {
+﻿/*grey #41414E*/
+
+.absolute {
     position: absolute;
 }
 
@@ -35,19 +37,21 @@ body {
 
 .footer {
     margin-top: 2em;
+    margin-bottom: 2em;
 }
 
 .footer-background {
-    position: relative;
-    bottom: 0;
     background-color: #41414E;
+    position: absolute;
     width: 100%;
+    min-height: 81px;
 }
 
 .footer-container {
     display: block;
     width: 85%;
     margin: auto;
+    min-height: 15vh;
 }
 
 .footer-text {
@@ -62,10 +66,6 @@ h4, h5, h6 {
     font-family: 'Open Sans', sans-serif;
 }
 
-html {
-    background-color: #41414E;
-}
-
 label {
     font-size: 17px;
     font-weight: lighter;
@@ -73,6 +73,7 @@ label {
 
 #main-content {
     margin-top: -15px;
+    min-height: 85vh;
 }
 
 #main-content:first-child {
@@ -88,7 +89,7 @@ label {
 }
 
 .navbar-inverse {
-    background-color: #41414E;
+    background-color: rgba(0, 0, 0, 0.7);
     border: none;
 }
 
@@ -100,7 +101,6 @@ label {
 }
 
 .navbar-inverse .navbar-nav > li.active {
-    background-color: #41414E;
     border-bottom: 5px solid #00B2CA;
 }
 
