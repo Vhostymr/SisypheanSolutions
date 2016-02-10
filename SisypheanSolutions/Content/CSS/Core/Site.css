@@ -31,6 +31,10 @@ body {
     min-height: 85vh;
 }
 
+.border-bottom {
+    border-bottom: 1px solid #dfdfdf;
+}
+
 .btn-primary {
     background-color: #00B2CA;
     min-width: 100px;
@@ -50,6 +54,19 @@ body {
 
 .content-section {
     min-height: 45vh;
+}
+
+div.navigation {
+    cursor: pointer;
+}
+
+.sub-section-font:active, 
+.sub-section-font:focus, 
+.sub-section-font:hover, 
+.sub-section-font:visited {
+    color: #00B2CA;
+    text-decoration: none;
+    outline: none;
 }
 
 .footer {
@@ -116,6 +133,16 @@ label {
     font-weight: lighter;
 }
 
+.main-banner {
+    font-size: 4em;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+}
+
+.margin-bottom {
+    margin-bottom: 10px;
+}
+
 #main-content {
     margin-top: -15px;
     min-height: 85vh;
@@ -127,10 +154,6 @@ label {
 
 .margin-top {
     margin-top: 30px;
-}
-
-.margin-bottom {
-    margin-bottom: 10px;
 }
 
 .navbar-inverse {
@@ -225,8 +248,27 @@ label {
     color: #496e9c;
 }
 
+@media (max-width:992px)
+{
+    .content-section {
+        min-height: 35vh;
+    }
+
+    .main-banner {
+        font-size: 3em;
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+    }
+}
+
 @media (max-width:767px)
 {
+    .main-banner {
+        font-size: 2.5em;
+        margin-top: 4vh;
+        margin-bottom: 4vh;
+    }
+
     .error-heading {
         margin-top: inherit;
         font-size: 48px;
@@ -243,6 +285,16 @@ label {
 
 @media (max-width:530px)
 {
+    .content-section {
+        min-height: 25vh;
+    }
+
+    .main-banner {
+        font-size: 2em;
+        margin-top: 0vh;
+        margin-bottom: 10vh;
+    }
+
     .error-heading {
         margin-top: inherit;
         font-size: 32px;

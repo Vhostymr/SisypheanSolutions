@@ -1,24 +1,9 @@
-﻿<style>
-    .col-md-4 {
-        position: relative;
-        height: 250px;
-    }
+﻿<link href="@Url.Content("~/Content/CSS/Homepage.css")" rel="stylesheet" />
 
-    .more {
-        position: absolute;
-        bottom: 0;
-    }
-
-    .sammy {
-        max-height: 60px;
-        max-width: 60px;
-        margin-bottom: 10px;
-    }
-</style>
 <div class="container margin-top">
     <div class="row content-section">
         <div class="col-md-12">
-            <h1>Sisyphean Solutions <br /><small>An endeavor in utilities and responsive design.</small></h1>
+            <h1 class="main-banner">Sisyphean Solutions <br /><small>An endeavor in utilities and responsive design.</small></h1>
         </div>
     </div>
 </div>
@@ -52,10 +37,10 @@
                     <a class="icon-anchor" href="http://sammyjs.org/">
                         <div class="icon-container">
                             <span class="icon">
-                                <img class="sammy" src="@Url.Content("~/Content/Images/sammy-icon-lg.png")" />
+                                <img class="max-icon" style="margin-bottom: 10px;" src="@Url.Content("~/Content/Images/sammy-icon-lg.png")" />
                             </span>
                         </div>
-                        <span class="icon-container">Routing by SammyJS</span>
+                        <span class="icon-container">Routing with SammyJS</span>
                     </a>
                 </div>
             </div>
@@ -63,24 +48,53 @@
     </div>
 </div>
 <div class="container margin-top">
-    <div class="row content-section">
-        <div class="col-md-4">
-            <h2>File Manager</h2>
-            <p>
-                File Manager gives you an easy, secure way to quickly upload and share files through optional
-                256 bit AES Encryption. <br /><br />
+    <div class="row content-section border-bottom">
+        <div class="col-sm-12">
+            <div class="file-manager sub-section-font pointer margin-top">
+                <span>
+                    <i class="fa fa-file-text-o"></i>
+                </span>
+                <h2 class="inline">File Manager</h2>
+            </div>
+            <p class="help-block">
+                Secure way to quickly upload and share files through optional 256 bit AES Encryption. <br />
                 Email the file links through the tool or copy them and send them directly.
             </p>
-            <p class="more"><input type="button" class="btn btn-primary file-manager" value="Try It" /></p>
         </div>
-        <div class="col-md-4">
-            <h2>WDRL <br /><small>by Anselm Hannemann</small></h2>
-            <p>The Web Development Reading List an excellent compilation of the most recent web development news from <a href="https://wdrl.info">wdrl.info</a>.</p>
-            <p class="more"><input type="button" class="btn btn-primary news-feed" value="See Feed" /></p>
+    </div>
+</div>
+<div class="container">
+    <div class="row content-section">
+        <div class="col-sm-12">
+            <div class="news-feed sub-section-font pointer margin-top">
+                <span>
+                    <img class="max-icon" src="https://wdrl-1d6d.kxcdn.com/assets/img/logo.svg" />
+                </span>
+                <h2 class="inline">WDRL <small>by Anselm Hannemann</small></h2>
+            </div>
+            <p class="help-block">
+                The Web Development Reading List is a newsletter of the most recent web development news from <a href="https://wdrl.info">wdrl.info</a>.
+            </p>
         </div>
-        <div class="col-md-4">
-            <h2>Nothing Here Either</h2>
-            <p>There's nothing here either, and quite likely this page will end up changing a ton before I'm done.</p>
+    </div>
+</div>
+<div class="container-fluid text-white text-center noselect margin-bottom">
+    <div class="row">
+        <div class="col-sm-12 background-container banner-section">
+            <div class="row">
+                <div class="col-sm-offset-3 col-sm-6 icon-parent-container">
+                    <a class="icon-anchor" href="https://www.linkedin.com/in/brandon-hurler-18382bb1">
+                        <div class="icon-container">
+                            <span class="icon">
+                                <i class="fa fa-linkedin-square"></i>
+                            </span>
+                        </div>
+                        <div class="icon-container">
+                            <span>View my LinkedIn</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -186,7 +186,9 @@
     <Content Include="Content\CSS\Core\font-awesome.min.css" />
     <Content Include="Content\CSS\FileUpload.css" />
     <Content Include="Content\CSS\Core\Site.css" />
+    <Content Include="Content\CSS\Homepage.css" />
     <Content Include="Content\CSS\Login.css" />
+    <Content Include="Content\CSS\NewsFeed.css" />
     <Content Include="Content\Fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\sammy-icon-lg.png" />

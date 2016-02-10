@@ -1,0 +1,40 @@
+﻿#news-feed > a {
+    font-size: 32px;
+    color: grey;
+}
+
+#news-feed > a:active, 
+#news-feed > a:focus, 
+#news-feed > a:hover, 
+#news-feed > a:visited {
+    font-size: 32px;
+    color: #00B2CA;
+    text-decoration: none;
+    outline: none;
+}
+
+#news-feed > a:not(:first-child) {
+    margin-top: 45px;
+}
+
+#news-feed > ul
+{
+    list-style-type: none;
+}
+
+#news-feed > ul > li {
+    margin-bottom: 15px;
+    padding: 10px;
+    font-family: Helvetica;
+    font-size: 17px;
+
+}
+
+p {
+    font-family: Helvetica;
+    font-size: 17px;
+}
+
+img {
+    max-width: 100%;
+}

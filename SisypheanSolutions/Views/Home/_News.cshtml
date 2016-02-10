@@ -1,37 +1,7 @@
 ﻿@model string
 
-<style>
-    #news-feed > a {
-        font-size: 32px;
-        color: grey;
-    }
+<link href="@Url.Content("~/Content/CSS/NewsFeed.css")" rel="stylesheet" />
 
-    #news-feed > a:not(:first-child) {
-        margin-top: 45px;
-    }
-
-    #news-feed > ul
-    {
-        list-style-type: none;
-    }
-
-    #news-feed > ul > li {
-        margin-bottom: 15px;
-        padding: 10px;
-        font-family: Helvetica;
-        font-size: 17px;
-
-    }
-
-    p {
-        font-family: Helvetica;
-        font-size: 17px;
-    }
-
-    img {
-        max-width: 100%;
-    }
-</style>
 <div id="news-feed" class="container" style="padding-top: 30px;">
     @Html.Raw(Model)
 </div>
