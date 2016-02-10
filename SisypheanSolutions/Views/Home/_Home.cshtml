@@ -1,9 +1,4 @@
 ﻿<style>
-    .background-container {
-        min-height: 550px;
-        width: 100%;
-    }
-
     .col-md-4 {
         position: relative;
         height: 250px;
@@ -13,18 +8,62 @@
         position: absolute;
         bottom: 0;
     }
-</style>
-<div class="container-fluid">
-    <div class="row">
-        <div class="background-container">
-            <div class="background">
 
+    .sammy {
+        max-height: 60px;
+        max-width: 60px;
+        margin-bottom: 10px;
+    }
+</style>
+<div class="container margin-top">
+    <div class="row content-section">
+        <div class="col-md-12">
+            <h1>Sisyphean Solutions <br /><small>An endeavor in utilities and responsive design.</small></h1>
+        </div>
+    </div>
+</div>
+<div class="container-fluid text-white text-center noselect">
+    <div class="row">
+        <div class="col-sm-12 background-container banner-section">
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-2 icon-parent-container">
+                    <a class="icon-anchor" href="https://github.com/bhurler1/SisypheanSolutions">
+                        <div class="icon-container">
+                            <span class="icon">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </div>
+                        <div class="icon-container">
+                            <span>View Source on Github</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-offset-1 col-sm-2 icon-parent-container">
+                    <a class="icon-anchor" href="https://getbootstrap.com/">
+                        <div class="icon-container">
+                            <span class="icon" style="font-family: Helvetica Neue, Helvetica, Arial, sans-serif">
+                                B
+                            </span>
+                        </div>
+                        <span class="icon-container">Built with Bootstrap</span>
+                    </a>
+                </div>
+                <div class="col-sm-offset-1 col-sm-2 icon-parent-container">
+                    <a class="icon-anchor" href="http://sammyjs.org/">
+                        <div class="icon-container">
+                            <span class="icon">
+                                <img class="sammy" src="@Url.Content("~/Content/Images/sammy-icon-lg.png")" />
+                            </span>
+                        </div>
+                        <span class="icon-container">Routing by SammyJS</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <div class="container margin-top">
-    <div class="row">
+    <div class="row content-section">
         <div class="col-md-4">
             <h2>File Manager</h2>
             <p>

@@ -33,6 +33,7 @@ namespace SisypheanSolutions
                    .Include("~/Content/CSS/Core/bootstrap.min.css",
                             "~/Content/CSS/Core/bootstrap.min.css.map",
                             "~/Content/CSS/Core/bootstrap-dialog.min.css",
+                            "~/Content/CSS/Core/font-awesome.min.css",
                             "~/Content/CSS/Core/*.css"));
         }
     }

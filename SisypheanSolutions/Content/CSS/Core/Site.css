@@ -4,10 +4,23 @@
     position: absolute;
 }
 
+.background {
+    background-color: #00B2CA;
+}
+
+.background-container {
+    background-color: #00B2CA;
+    width: 100%;
+}
+
 .background-overlay {
     opacity: 0.8;
     background-color: #FFF;
     min-height: 350px;
+}
+
+.banner-section {
+    min-height: 15vh;
 }
 
 body {
@@ -33,6 +46,10 @@ body {
     background-color: #009cb1;
     min-width: 100px;
     border: 1px solid transparent;
+}
+
+.content-section {
+    min-height: 45vh;
 }
 
 .footer {
@@ -64,6 +81,34 @@ h1, h2, h3 {
 
 h4, h5, h6 {
     font-family: 'Open Sans', sans-serif;
+}
+
+.icon {
+    display: inline-block;
+    font-size: 60px;
+    height: 60px;
+    width: 60px;
+    line-height: 60px;
+}
+
+.icon-anchor, 
+.icon-anchor:hover, 
+.icon-anchor:active, 
+.icon-anchor:focus {
+    color: #fff;
+    text-decoration: none;
+    outline: none;
+}
+
+.icon-container {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.icon-parent-container {
+    padding: 35px 0px;
+    font-size: 1.5em;
 }
 
 label {
@@ -138,12 +183,20 @@ label {
     user-select: none;
 }
 
+.padding-bottom {
+    padding-bottom: 100px;
+}
+
 .pointer {
     cursor: pointer;
 }
 
 .relative {
     position: relative;
+}
+
+.text-white {
+    color: #FFF;
 }
 
 @media (max-width:767px)
