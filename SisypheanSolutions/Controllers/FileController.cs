@@ -27,7 +27,7 @@ namespace SisypheanSolutions.Controllers
 
                 if (path.EndsWith(EncryptedExtension()))
                 {
-                    return Redirect("/#/file/filedownload?uniqueID=" + uniqueID);
+                    return Redirect("/#/file-download?uniqueID=" + uniqueID);
                 }
 
                 else

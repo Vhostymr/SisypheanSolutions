@@ -28,9 +28,9 @@ namespace SisypheanSolutions.Controllers
             return PartialView("_FileUpload");
         }
 
-        public ActionResult FileDownload()
+        public ActionResult FileDownload(string uniqueID)
         {
-            return PartialView("_FileDownload");
+            return PartialView("_FileDownload", uniqueID);
         }
 
         public ActionResult News()

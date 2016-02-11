@@ -1,15 +1,17 @@
-﻿<div id="file-download" class="container">
+﻿@model string
+
+<div id="file-download" class="container">
     <h2>File Download <br />
         <small>
             It appears you are trying to download a file that has been encrypted. <br /> 
-            Please provide the password for the file to unencrypt and download.
+            Please provide the password for the file to decrypt and download.
         </small>
     </h2>
     <div class="row">
         <div class="col-sm-6">
             @using (Html.BeginForm("FileDownload", "File", FormMethod.Post, new { @id="file-form" }))
             {
-                <input id="file" name="uniqueID" readonly class="form-control" /><br />
+                <input id="file" name="uniqueID" type="hidden" value="@Model"/>
                 <input id="password" name="password" type="password" class="form-control" placeholder="Password" /><br />
 
                 <input id="submit-button" type="button" class="btn btn-primary" value="Download" />
@@ -20,13 +22,10 @@
 
 <script>
     $(function () {
-        var fileID = getParameterByName('uniqueID');
-        $('#file').val(fileID);
-
         $('#submit-button').on('click', function () {
             var url = '/File/ValidateDownload';
             
-            $.post(url, { uniqueID: fileID, password: $('#password').val() }, function (data) {
+            $.post(url, { uniqueID: $('#file').val(), password: $('#password').val() }, function (data) {
                 if (data.success) {
                     $('#file-form').submit();
                 }
@@ -39,12 +38,5 @@
                 }
             });
         });
-
-        function getParameterByName(name) {
-            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                results = regex.exec(location.search);
-            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-        }
     });
 </script>

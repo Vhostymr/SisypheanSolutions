@@ -23,6 +23,18 @@
         });
     });
 
+    var download = $.sammy('#main-content', function (data) {
+        this.get('#/file-download', function (context) {
+            var uniqueID = context.params['uniqueID'];
+            var param = '?uniqueID=';
+            var action = '/Home/FileDownload';
+            var url = action + param + uniqueID;
+
+            GetPartial(url);
+            SetActive('.file-manager');
+        });
+    });
+
     var about = $.sammy('#main-content', function (data) {
         this.get('#/about', function (context) {
             var url = "/Home/About";
@@ -41,9 +53,11 @@
 
     var filedownload = $.sammy('#main-content', function (data) {
         this.get('#/file/filedownload', function (context) {
-            var url = "/File/FileDownload";
-            GetPartial(url);
-            SetActive('.file-manager');
+            var uniqueID = context.params['uniqueID'];
+            var param = '?uniqueID=';
+            var action = '/File/FileDownload';
+
+            window.location = action + param + uniqueID;
         });
     });
 
@@ -70,6 +84,7 @@
         app.run('#/');
         news.run('#/news-feed');
         file.run('#/file-manager');
+        download.run('#/file-download');
         about.run('#/about');
         contact.run('#/contact');
         filedownload.run('#/file/filedownload');
