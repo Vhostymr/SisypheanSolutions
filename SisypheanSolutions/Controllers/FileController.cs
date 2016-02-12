@@ -27,6 +27,13 @@ namespace SisypheanSolutions.Controllers
             return PartialView("_FileDownload", uniqueID);
         }
 
+        /// <summary>
+        /// Attempts to download the file directly if not encrypted.
+        /// 
+        /// If encrypted, redirect to the appropriate URL for password entry.
+        /// </summary>
+        /// <param name="uniqueID"></param>
+        /// <returns></returns>
         public ActionResult FileDownload(string uniqueID)
         {
             try
@@ -68,6 +75,8 @@ namespace SisypheanSolutions.Controllers
 
         /// <summary>
         /// This method is the for the file download post, which is only encrypted files, as they need a password.
+        /// 
+        /// Should be validated first via AJAX with ValidateDownload(). This allows quick feedback if the password is incorrect.
         /// </summary>
         /// <param name="uniqueID">The guid that causes uniqueness for the files.</param>
         /// <param name="password">The password used to decrypt the files.</param>
@@ -104,6 +113,13 @@ namespace SisypheanSolutions.Controllers
             }
         }
 
+        /// <summary>
+        /// Validates that a file can be successfully decrypted by checking if it can decrypt the file name.
+        /// Returns Json response (for AJAX).
+        /// </summary>
+        /// <param name="uniqueID"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult ValidateDownload(string uniqueID, string password)
         {
@@ -149,6 +165,28 @@ namespace SisypheanSolutions.Controllers
             }
         }
 
+        /// <summary>
+        /// Upload method for one or more files.
+        ///     <para>
+        ///     If a single file:
+        ///     <para>
+        ///             Checks to see if the file needs to be encrypted, if so, encrypts and uploads.
+        ///     
+        ///             Otherwise, the file is uploaded directly.
+        ///         </para>
+        ///     </para>
+        ///     <para>
+        ///     If multiple files:
+        ///         <para>
+        ///             Checks to see if the files need to be encrypted, if so, bundles files into a zip file, encrypts, and uploads.
+        ///     
+        ///             Otherwise, the files are bundled and uploaded directly.
+        ///         </para>
+        ///     </para>
+        /// </summary>
+        /// <param name="files"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult FileUpload(HttpPostedFileBase[] files, string password = "")
         {
@@ -160,45 +198,20 @@ namespace SisypheanSolutions.Controllers
                 //More than one file, probably should be zipped.
                 if (files.Length > 1)
                 {
-                    using (var compressedFileStream = new MemoryStream())
+                    byte[] zipBytes = ZipFiles(files);
+
+                    string fileName = "BundledArchive.zip";
+
+                    //The extension is added twice. Once for password checking, once for file.
+                    if (password != "")
                     {
-                        //Create an archive and store the stream in memory.
-                        using (var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Update, false))
-                        {
-                            foreach (var file in files)
-                            {
-                                //Create a zip entry for each attachment.
-                                var zipEntry = zipArchive.CreateEntry(file.FileName);
-
-                                byte[] fileBytes = FileToByteArray(file);
-
-                                //Get the stream of the attachment
-                                using (var originalFileStream = new MemoryStream(fileBytes))
-                                {
-                                    using (var zipEntryStream = zipEntry.Open())
-                                    {
-                                        //Copy the attachment stream to the zip entry stream
-                                        originalFileStream.CopyTo(zipEntryStream);
-                                    }
-                                }
-                            }
-
-                        }
-
-                        byte[] zipBytes = compressedFileStream.ToArray();
-                        string fileName = "BundledArchive.zip";
-
-                        //The extension is added twice. Once for password checking, once for file.
-                        if (password != "")
-                        {
-                            zipBytes = EncryptFile(zipBytes, password);
-                            fileName = fileName + EncryptedExtension();
-                            fileName = Base64Encode(EncryptString(fileName, password));
-                            fileName = fileName + EncryptedExtension();
-                        }
-
-                        SaveFile(uniqueID, fileName, zipBytes);
+                        zipBytes = EncryptFile(zipBytes, password);
+                        fileName = fileName + EncryptedExtension();
+                        fileName = Base64Encode(EncryptString(fileName, password));
+                        fileName = fileName + EncryptedExtension();
                     }
+
+                    SaveFile(uniqueID, fileName, zipBytes);
                 }
 
                 //Doesn't need zipping.
@@ -225,6 +238,44 @@ namespace SisypheanSolutions.Controllers
             {
                 string[] errors = { "There was an error when processing your files. Please try re-uploading." };
                 return Json(new { success = false, errors });
+            }
+        }
+
+        /// <summary>
+        /// Accepts an array of files and adds them to a zip archive, in memory.
+        /// 
+        /// Returns the byte[] of the zipped stream.
+        /// </summary>
+        /// <param name="files"></param>
+        /// <returns></returns>
+        private byte[] ZipFiles(HttpPostedFileBase[] files)
+        {
+            using (var compressedFileStream = new MemoryStream())
+            {
+                //Create an archive and store the stream in memory.
+                using (var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Update, false))
+                {
+                    foreach (var file in files)
+                    {
+                        //Create a zip entry for each attachment.
+                        var zipEntry = zipArchive.CreateEntry(file.FileName);
+
+                        byte[] fileBytes = FileToByteArray(file);
+
+                        //Get the stream of the attachment
+                        using (var originalFileStream = new MemoryStream(fileBytes))
+                        {
+                            using (var zipEntryStream = zipEntry.Open())
+                            {
+                                //Copy the attachment stream to the zip entry stream
+                                originalFileStream.CopyTo(zipEntryStream);
+                            }
+                        }
+                    }
+
+                }
+
+                return compressedFileStream.ToArray();
             }
         }
 
