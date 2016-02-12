@@ -239,9 +239,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Error\GeneralError.cshtml" />
-    <Content Include="Views\Error\InternalServer.cshtml" />
-    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\_GeneralErrorPartial.cshtml" />
+    <Content Include="Views\Error\_InternalServerPartial.cshtml" />
+    <Content Include="Views\Error\_NotFoundPartial.cshtml" />
     <Content Include="Views\File\_DownloadError.cshtml" />
     <Content Include="Views\File\_FileDownload.cshtml" />
     <Content Include="Views\Home\_About.cshtml" />

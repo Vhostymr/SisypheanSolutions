@@ -4,19 +4,19 @@ namespace SisypheanSolutions.Controllers
 {
     public class ErrorController : Controller
     {
-        public ViewResult Index()
+        public ActionResult Index()
         {
-            return View("GeneralError");
+            return PartialView("_GeneralErrorPartial");
         }
 
-        public ViewResult NotFound()
+        public ActionResult NotFound()
         {
-            return View("NotFound");
+            return PartialView("_NotFoundPartial");
         }
 
-        public ViewResult InternalServer()
+        public ActionResult InternalServer()
         {
-            return View("InternalServer");
+            return PartialView("_InternalServerPartial");
         }
     }
 }

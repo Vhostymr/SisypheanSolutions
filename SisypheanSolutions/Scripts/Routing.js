@@ -15,6 +15,22 @@
         });
     });
 
+    var about = $.sammy('#main-content', function (data) {
+        this.get('#/about', function (context) {
+            var url = "/Home/About";
+            GetPartial(url);
+            SetActive('.about');
+        });
+    });
+
+    var contact = $.sammy('#main-content', function (data) {
+        this.get('#/contact', function (context) {
+            var url = "/Home/Contact";
+            GetPartial(url);
+            SetActive('.contact');
+        });
+    });
+
     var file = $.sammy('#main-content', function (data) {
         this.get('#/file-manager', function (context) {
             var url = "/File/FileManagerPartial";
@@ -35,30 +51,6 @@
         });
     });
 
-    var notFound = $.sammy('#main-content', function (data) {
-        this.get('#/file-not-found', function (context) {
-            var url = "/File/FileNotFoundPartial";
-            GetPartial(url);
-            SetActive('.file-manager');
-        });
-    });
-
-    var about = $.sammy('#main-content', function (data) {
-        this.get('#/about', function (context) {
-            var url = "/Home/About";
-            GetPartial(url);
-            SetActive('.about');
-        });
-    });
-
-    var contact = $.sammy('#main-content', function (data) {
-        this.get('#/contact', function (context) {
-            var url = "/Home/Contact";
-            GetPartial(url);
-            SetActive('.contact');
-        });
-    });
-
     var filedownload = $.sammy('#main-content', function (data) {
         this.get('#/file/filedownload', function (context) {
             var uniqueID = context.params['uniqueID'];
@@ -66,6 +58,42 @@
             var action = '/File/FileDownload';
 
             window.location = action + param + uniqueID;
+        });
+    });
+
+    var fileNotFound = $.sammy('#main-content', function (data) {
+        this.get('#/file-not-found', function (context) {
+            var url = "/File/FileNotFoundPartial";
+            GetPartial(url);
+            SetActive('.file-manager');
+        });
+    });
+
+    var error = $.sammy('#main-content', function (data) {
+        this.get('#/error', function (context) {
+            var url = "/Error/";
+            GetPartial(url);
+        });
+    });
+
+    var internalServerError = $.sammy('#main-content', function (data) {
+        this.get('#/internal-server-error', function (context) {
+            var url = "/File/InternalServer";
+            GetPartial(url);
+        });
+    });
+
+    var notFoundError = $.sammy('#main-content', function (data) {
+        this.get('#/page-not-found', function (context) {
+            var url = "/Error/NotFound";
+            GetPartial(url);
+        });
+    });
+
+    var unauthorized = $.sammy('#main-content', function (data) {
+        this.get('#/unauthorized', function (context) {
+            var url = "/Error/Unauthorized";
+            GetPartial(url);
         });
     });
 
@@ -92,11 +120,17 @@
         app.run('#/');
         news.run('#/news-feed');
         file.run('#/file-manager');
-        download.run('#/file-download');
-        notFound.run('#/file-not-found');
         about.run('#/about');
         contact.run('#/contact');
+
+        download.run('#/file-download');
         filedownload.run('#/file/filedownload');
+        fileNotFound.run('#/file-not-found');
+
+        error.run('#/error');
+        internalServerError.run('#/internal-server-error');
+        notFoundError.run('#/page-not-found');
+        unauthorized.run('#/unauthorized');
 
         $('.routing').on('click', '.home', function () {
             NavigateToURL('');

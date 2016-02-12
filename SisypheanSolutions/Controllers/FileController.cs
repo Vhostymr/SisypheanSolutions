@@ -38,6 +38,12 @@ namespace SisypheanSolutions.Controllers
             {
                 var files = Directory.GetFiles(GetFileLocation());
                 string path = files.FirstOrDefault(item => item.Contains(uniqueID));
+
+                if (String.IsNullOrEmpty(path))
+                {
+                    return Redirect("/#/file-not-found");
+                }
+
                 string fileName = GetFileName(path);
 
                 if (path.EndsWith(EncryptedExtension()))
@@ -53,10 +59,10 @@ namespace SisypheanSolutions.Controllers
                 }
             }
 
-            catch
+            catch (Exception exception)
             {
-                //Actually, return file not found whenever you get around to it.
-                return RedirectToAction("Index", "Home", new { location = "filedownload", id = uniqueID });
+                //Need exception logging.
+                return Redirect("/#/error");
             }
         }
 
