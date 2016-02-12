@@ -78,7 +78,7 @@
 
     var internalServerError = $.sammy('#main-content', function (data) {
         this.get('#/internal-server-error', function (context) {
-            var url = "/File/InternalServer";
+            var url = "/Error/InternalServer";
             GetPartial(url);
         });
     });

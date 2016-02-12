@@ -78,7 +78,7 @@ div.navigation {
     background-color: #41414E;
     position: absolute;
     width: 100%;
-    min-height: 81px;
+    min-height: 8.8vh;
 }
 
 .footer-container {
@@ -234,7 +234,7 @@ label {
 ****************************/
 
 .error-heading {
-    margin-top: 1.5em;
+    margin-top: 2.5em;
     margin-bottom: 0.5em;
     font-size: 64px;
     text-align: center;
@@ -242,7 +242,6 @@ label {
 }
 
 .error-body {
-    margin-bottom: 1.5em;
     font-size: 28px;
     text-align: center;
     color: #496e9c;
