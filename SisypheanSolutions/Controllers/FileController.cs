@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
@@ -12,11 +11,6 @@ namespace SisypheanSolutions.Controllers
 {
     public class FileController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult FileManagerPartial()
         {
             return PartialView("_FileUpload");
