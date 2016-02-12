@@ -23,16 +23,6 @@ namespace SisypheanSolutions.Controllers
             return PartialView("_Home");
         }
 
-        public ActionResult FileManager()
-        {
-            return PartialView("_FileUpload");
-        }
-
-        public ActionResult FileDownload(string uniqueID)
-        {
-            return PartialView("_FileDownload", uniqueID);
-        }
-
         public ActionResult News()
         {
             string feed = ParseRssFile();

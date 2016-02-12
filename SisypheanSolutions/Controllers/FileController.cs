@@ -17,6 +17,21 @@ namespace SisypheanSolutions.Controllers
             return View();
         }
 
+        public ActionResult FileManagerPartial()
+        {
+            return PartialView("_FileUpload");
+        }
+
+        public ActionResult FileDownloadPartial(string uniqueID)
+        {
+            return PartialView("_FileDownload", uniqueID);
+        }
+
+        public ActionResult FileNotFoundPartial()
+        {
+            return PartialView("_FileNotFound");
+        }
+
         public ActionResult FileDownload(string uniqueID)
         {
             try
@@ -56,14 +71,20 @@ namespace SisypheanSolutions.Controllers
         {
             try
             {
-                var files = Directory.GetFiles(GetFileLocation());
+                string[] files = Directory.GetFiles(GetFileLocation());
                 string path = files.FirstOrDefault(item => item.Contains(uniqueID));
+
+                if (String.IsNullOrEmpty(path))
+                {
+                    return Redirect("/#/file-not-found");
+                }
+
                 string fileName = Base64Decode(GetFileName(path));
                 fileName = DecryptString(fileName, password);
 
                 if (!fileName.Contains(EncryptedExtension()))
                 {
-                    //Return not found
+                    return PartialView("_DownloadError");
                 }
 
                 byte[] decryptedBytes = DecryptFile(path, password);
@@ -82,9 +103,16 @@ namespace SisypheanSolutions.Controllers
         {
             try
             {
-                var files = Directory.GetFiles(GetFileLocation());
-                var path = files.FirstOrDefault(item => item.Contains(uniqueID));
-                var fileName = Base64Decode(GetFileName(path));
+                string[] files = Directory.GetFiles(GetFileLocation());
+                string path = files.FirstOrDefault(item => item.Contains(uniqueID));
+
+                if (String.IsNullOrEmpty(path))
+                {
+                    string[] errors = { "The file you were looking for was not found." };
+                    return Json(new { success = false, errors });
+                }
+
+                string fileName = Base64Decode(GetFileName(path));
                 fileName = DecryptString(fileName, password);
 
                 if (fileName.Contains(EncryptedExtension()))
@@ -99,10 +127,19 @@ namespace SisypheanSolutions.Controllers
                 }
             }
 
-            catch (CryptographicException)
+            catch (Exception exception)
             {
-                string[] errors = { "The password entered is incorrect. Please try again." };
-                return Json(new { success = false, errors });
+                if (exception is CryptographicException)
+                {
+                    string[] errors = { "The password entered is incorrect. Please try again." };
+                    return Json(new { success = false, errors });
+                }
+
+                else
+                {
+                    string[] errors = { "There was a problem processing your download." };
+                    return Json(new { success = false, errors });
+                }
             }
         }
 

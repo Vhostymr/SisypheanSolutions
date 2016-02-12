@@ -17,7 +17,7 @@
 
     var file = $.sammy('#main-content', function (data) {
         this.get('#/file-manager', function (context) {
-            var url = "/Home/FileManager";
+            var url = "/File/FileManagerPartial";
             GetPartial(url);
             SetActive('.file-manager');
         });
@@ -27,9 +27,17 @@
         this.get('#/file-download', function (context) {
             var uniqueID = context.params['uniqueID'];
             var param = '?uniqueID=';
-            var action = '/Home/FileDownload';
+            var action = '/File/FileDownloadPartial';
             var url = action + param + uniqueID;
 
+            GetPartial(url);
+            SetActive('.file-manager');
+        });
+    });
+
+    var notFound = $.sammy('#main-content', function (data) {
+        this.get('#/file-not-found', function (context) {
+            var url = "/File/FileNotFoundPartial";
             GetPartial(url);
             SetActive('.file-manager');
         });
@@ -85,6 +93,7 @@
         news.run('#/news-feed');
         file.run('#/file-manager');
         download.run('#/file-download');
+        notFound.run('#/file-not-found');
         about.run('#/about');
         contact.run('#/contact');
         filedownload.run('#/file/filedownload');
