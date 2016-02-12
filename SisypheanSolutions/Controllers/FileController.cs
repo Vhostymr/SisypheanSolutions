@@ -102,7 +102,8 @@ namespace SisypheanSolutions.Controllers
                     return PartialView("_DownloadError");
                 }
 
-                byte[] decryptedBytes = DecryptFile(path, password);
+                byte[] bytesToBeDecrypted = System.IO.File.ReadAllBytes(path);
+                byte[] decryptedBytes = DecryptFile(bytesToBeDecrypted, password);
 
                 return ReturnFile(fileName, decryptedBytes);
             }
@@ -272,7 +273,6 @@ namespace SisypheanSolutions.Controllers
                             }
                         }
                     }
-
                 }
 
                 return compressedFileStream.ToArray();
@@ -280,6 +280,12 @@ namespace SisypheanSolutions.Controllers
         }
 
         #region Encryption
+        /// <summary>
+        /// Encrypts a file from a given byte[] with the provided password.
+        /// </summary>
+        /// <param name="bytesToBeEncrypted"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         private byte[] EncryptFile(byte[] bytesToBeEncrypted, string password)
         {
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
@@ -288,18 +294,26 @@ namespace SisypheanSolutions.Controllers
             return AES_Encrypt(bytesToBeEncrypted, passwordBytes);
         }
 
-        private byte[] DecryptFile(string path, string password)
+        /// <summary>
+        /// Decrypts a file from a given byte[] with the provided password.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        private byte[] DecryptFile(byte[] bytesToBeDecrypted, string password)
         {
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
 
-            byte[] bytesToBeDecrypted = System.IO.File.ReadAllBytes(path);
-
-            byte[] bytesDecrypted = AES_Decrypt(bytesToBeDecrypted, passwordBytes);
-
-            return bytesDecrypted;
+            return AES_Decrypt(bytesToBeDecrypted, passwordBytes);
         }
 
+        /// <summary>
+        /// Encrypts a string with the given password.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public string EncryptString(string input, string password)
         {
             // Get the bytes of the string
@@ -316,6 +330,12 @@ namespace SisypheanSolutions.Controllers
             return encryptedString;
         }
 
+        /// <summary>
+        /// Decrypts a string with the appropriate password.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public string DecryptString(string input, string password)
         {
             // Get the bytes of the string
@@ -330,6 +350,12 @@ namespace SisypheanSolutions.Controllers
             return decryptedString;
         }
 
+        /// <summary>
+        /// Encrypts byte[] with 256 AES Encryption.
+        /// </summary>
+        /// <param name="bytesToBeEncrypted"></param>
+        /// <param name="passwordBytes"></param>
+        /// <returns></returns>
         private byte[] AES_Encrypt(byte[] bytesToBeEncrypted, byte[] passwordBytes)
         {
             byte[] encryptedBytes = null;
@@ -361,6 +387,12 @@ namespace SisypheanSolutions.Controllers
             return encryptedBytes;
         }
 
+        /// <summary>
+        /// Decrypts AES encrypted byte[].
+        /// </summary>
+        /// <param name="bytesToBeDecrypted"></param>
+        /// <param name="passwordBytes"></param>
+        /// <returns></returns>
         private byte[] AES_Decrypt(byte[] bytesToBeDecrypted, byte[] passwordBytes)
         {
             byte[] decryptedBytes = null;
@@ -523,12 +555,22 @@ namespace SisypheanSolutions.Controllers
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 
+        /// <summary>
+        /// UTF8 encodes plain text.
+        /// </summary>
+        /// <param name="plainText"></param>
+        /// <returns></returns>
         public static string Base64Encode(string plainText)
         {
             var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
             return Convert.ToBase64String(plainTextBytes);
         }
 
+        /// <summary>
+        /// Converts base 64 encoded data to UTF8 string.
+        /// </summary>
+        /// <param name="base64EncodedData"></param>
+        /// <returns></returns>
         public static string Base64Decode(string base64EncodedData)
         {
             var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
