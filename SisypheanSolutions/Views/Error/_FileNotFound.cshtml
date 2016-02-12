@@ -1,0 +1,27 @@
+﻿@model HandleErrorInfo
+
+<div>
+    <h1 class="error-heading">File Not Found</h1>
+
+    <div class="error-body">
+        <span>
+            It appears you are trying to download a file that doesn't exist. <br />
+            The file may have been deleted or uploaded incorrectly.
+        </span>
+    </div>
+    @if (Model != null && HttpContext.Current.IsDebuggingEnabled)
+    {
+        <div>
+            <p>
+                <b>Exception:</b> @Model.Exception.Message<br />
+                <b>Controller:</b> @Model.ControllerName<br />
+                <b>Action:</b> @Model.ActionName
+            </p>
+            <div style="overflow:scroll">
+                <pre>
+                    @Model.Exception.StackTrace
+                </pre>
+            </div>
+        </div>
+    }
+</div>

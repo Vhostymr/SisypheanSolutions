@@ -6,17 +6,32 @@ namespace SisypheanSolutions.Controllers
     {
         public ActionResult Index()
         {
-            return PartialView("_GeneralErrorPartial");
+            return PartialView("_GeneralError");
         }
 
-        public ActionResult NotFound()
+        public ActionResult NotFoundPartial()
         {
-            return PartialView("_NotFoundPartial");
+            return PartialView("_NotFound");
         }
 
-        public ActionResult InternalServer()
+        public ActionResult UnauthorizedPartial()
         {
-            return PartialView("_InternalServerPartial");
+            return PartialView("_Unauthorized");
+        }
+
+        public ActionResult InternalServerPartial()
+        {
+            return PartialView("_InternalServer");
+        }
+
+        public ActionResult FileNotFoundPartial()
+        {
+            return PartialView("_FileNotFound");
+        }
+
+        public ActionResult DuplicateFilePartial()
+        {
+            return PartialView("_DuplicateFile");
         }
     }
 }

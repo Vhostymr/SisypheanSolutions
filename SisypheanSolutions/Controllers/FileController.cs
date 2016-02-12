@@ -27,17 +27,12 @@ namespace SisypheanSolutions.Controllers
             return PartialView("_FileDownload", uniqueID);
         }
 
-        public ActionResult FileNotFoundPartial()
-        {
-            return PartialView("_FileNotFound");
-        }
-
         public ActionResult FileDownload(string uniqueID)
         {
             try
             {
                 var files = Directory.GetFiles(GetFileLocation());
-                string path = files.FirstOrDefault(item => item.Contains(uniqueID));
+                string path = files.SingleOrDefault(item => item.Contains(uniqueID));
 
                 if (String.IsNullOrEmpty(path))
                 {
@@ -61,6 +56,11 @@ namespace SisypheanSolutions.Controllers
 
             catch (Exception exception)
             {
+                if (exception is InvalidOperationException && exception.InnerException.Message == "Sequence contains more than one matching element.")
+                {
+                    return Redirect("/#/duplicate-file");
+                }
+
                 //Need exception logging.
                 return Redirect("/#/error");
             }
@@ -78,7 +78,7 @@ namespace SisypheanSolutions.Controllers
             try
             {
                 string[] files = Directory.GetFiles(GetFileLocation());
-                string path = files.FirstOrDefault(item => item.Contains(uniqueID));
+                string path = files.SingleOrDefault(item => item.Contains(uniqueID));
 
                 if (String.IsNullOrEmpty(path))
                 {
@@ -110,7 +110,7 @@ namespace SisypheanSolutions.Controllers
             try
             {
                 string[] files = Directory.GetFiles(GetFileLocation());
-                string path = files.FirstOrDefault(item => item.Contains(uniqueID));
+                string path = files.SingleOrDefault(item => item.Contains(uniqueID));
 
                 if (String.IsNullOrEmpty(path))
                 {

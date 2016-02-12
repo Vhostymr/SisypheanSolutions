@@ -61,14 +61,6 @@
         });
     });
 
-    var fileNotFound = $.sammy('#main-content', function (data) {
-        this.get('#/file-not-found', function (context) {
-            var url = "/File/FileNotFoundPartial";
-            GetPartial(url);
-            SetActive('.file-manager');
-        });
-    });
-
     var error = $.sammy('#main-content', function (data) {
         this.get('#/error', function (context) {
             var url = "/Error/";
@@ -77,22 +69,37 @@
     });
 
     var internalServerError = $.sammy('#main-content', function (data) {
-        this.get('#/internal-server-error', function (context) {
-            var url = "/Error/InternalServer";
+        this.get('#/internal-server', function (context) {
+            var url = "/Error/InternalServerPartial";
             GetPartial(url);
         });
     });
 
     var notFoundError = $.sammy('#main-content', function (data) {
         this.get('#/page-not-found', function (context) {
-            var url = "/Error/NotFound";
+            var url = "/Error/NotFoundPartial";
+            GetPartial(url);
+        });
+    });
+
+    var fileNotFound = $.sammy('#main-content', function (data) {
+        this.get('#/file-not-found', function (context) {
+            var url = "/File/FileNotFoundPartial";
+            GetPartial(url);
+            SetActive('.file-manager');
+        });
+    });
+
+    var duplicateFile = $.sammy('#main-content', function (data) {
+        this.get('#/duplicate-file', function (context) {
+            var url = "/Error/DuplicateFilePartial";
             GetPartial(url);
         });
     });
 
     var unauthorized = $.sammy('#main-content', function (data) {
         this.get('#/unauthorized', function (context) {
-            var url = "/Error/Unauthorized";
+            var url = "/Error/UnauthorizedPartial";
             GetPartial(url);
         });
     });
@@ -130,6 +137,7 @@
         error.run('#/error');
         internalServerError.run('#/internal-server-error');
         notFoundError.run('#/page-not-found');
+        duplicateFile.run('#/duplicate-file-error');
         unauthorized.run('#/unauthorized');
 
         $('.routing').on('click', '.home', function () {
