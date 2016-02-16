@@ -34,11 +34,6 @@ namespace SisypheanSolutions.Controllers
             return PartialView("_About");
         }
 
-        public ActionResult Contact()
-        {
-            return PartialView("_Contact");
-        }
-
         private string ParseRssFile()
         {
             XmlDocument rssXmlDoc = new XmlDocument();

@@ -23,14 +23,6 @@
         });
     });
 
-    var contact = $.sammy('#main-content', function (data) {
-        this.get('#/contact', function (context) {
-            var url = "/Home/Contact";
-            GetPartial(url);
-            SetActive('.contact');
-        });
-    });
-
     var file = $.sammy('#main-content', function (data) {
         this.get('#/file-manager', function (context) {
             var url = "/File/FileManagerPartial";

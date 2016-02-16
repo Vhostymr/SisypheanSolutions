@@ -249,7 +249,6 @@
     <Content Include="Views\Error\_NotFound.cshtml" />
     <Content Include="Views\File\_FileDownload.cshtml" />
     <Content Include="Views\Home\_About.cshtml" />
-    <Content Include="Views\Home\_Contact.cshtml" />
     <Content Include="Views\Home\_Home.cshtml" />
     <Content Include="Views\Home\_News.cshtml" />
     <Content Include="Views\Error\_Unauthorized.cshtml" />
