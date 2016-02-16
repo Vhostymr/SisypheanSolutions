@@ -120,7 +120,6 @@
         news.run('#/news-feed');
         file.run('#/file-manager');
         about.run('#/about');
-        contact.run('#/contact');
 
         download.run('#/file-download');
         filedownload.run('#/file/filedownload');
@@ -149,11 +148,6 @@
 
         $('.routing').on('click', '.about', function () {
             NavigateToURL('about');
-            $('div.navbar-collapse').removeClass('in');
-        });
-
-        $('.routing').on('click', '.contact', function () {
-            NavigateToURL('contact');
             $('div.navbar-collapse').removeClass('in');
         });
     });
