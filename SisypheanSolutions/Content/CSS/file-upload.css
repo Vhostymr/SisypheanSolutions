@@ -19,6 +19,15 @@
     display: block;
 }
 
+.download-link-text {
+    font-size: 18px;
+    color: grey;
+}
+
 .input-height {
     height: 34px !important;
+}
+
+#upload-feedback {
+    margin-top: 7rem;
 }

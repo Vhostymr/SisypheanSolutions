@@ -21,6 +21,11 @@ namespace SisypheanSolutions.Controllers
             return PartialView("_FileDownload", uniqueID);
         }
 
+        public ActionResult FileLinkPartial(string link)
+        {
+            return PartialView("_FileLink", link);
+        }
+
         /// <summary>
         /// Attempts to download the file directly if not encrypted.
         /// 

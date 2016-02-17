@@ -93,6 +93,10 @@
             success: function (data) {
                 if (data.success) {
                     alertify.success("Your file(s) have been successfully uploaded.");
+
+                    $.get('/File/FileLinkPartial', { link: data.link }, function (data) {
+                        $('#upload-feedback').html(data);
+                    });
                 }
 
                 else {
