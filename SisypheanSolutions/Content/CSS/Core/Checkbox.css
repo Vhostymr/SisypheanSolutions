@@ -48,7 +48,7 @@ input[type="checkbox"]:checked ~ label:after {
     content: '\2714';
     position: absolute;
     border-radius: 20%;
-    top: 0px;
+    top: -1px;
     left: 18px;
     color: #808080;
 }

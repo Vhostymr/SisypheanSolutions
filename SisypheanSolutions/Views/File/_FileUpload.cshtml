@@ -3,33 +3,47 @@
 <div id="file-upload-section" class="container">
     <h2>File Manager<br /><small>The easy way to securely share files.</small></h2>
     <form id="file-upload-form" action="/file/fileupload" method="post" enctype="multipart/form-data">
-        <div class="row margin-top margin-bottom">
-            <div class="col-sm-6">
-                <input id="encrypted" name="encrypted" type="checkbox" />
-                <label for="encrypted"><span>Encrypted</span></label>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-sm-12">
                 <div class="input-group margin-bottom">
                     <span class="input-group-btn">
-                        <span class="btn btn-primary btn-file">
+                        <span class="btn btn-primary btn-file input-height">
                             Browse… <input id="browse" type="file" name="files" multiple="multiple">
                         </span>
                     </span>
 
-                    <input id="filefeedback" type="text" class="form-control" readonly="">
+                    <input id="filefeedback" type="text" class="form-control input-height" readonly="">
                 </div>
             </div>
         </div>
-
+        <div class="row" style="margin-top: 15px; margin-bottom: 25px;">
+            <div class="col-xs-12">
+                <h4>File Upload Options</h4>
+            </div>
+            <div class="col-xs-12">
+                <input id="encrypted" name="encrypted" type="checkbox" />
+                <label for="encrypted"><span>Encrypted</span></label>
+            </div>
+            <div class="col-xs-12">
+                <input id="email" name="email" type="checkbox" />
+                <label for="email"><span>Email</span></label>
+            </div>
+            <div class="col-xs-12">
+                <input id="clipboard" name="clipboard" type="checkbox" />
+                <label for="clipboard"><span>Copy Link to Clipboard</span></label>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 <button id="submit-button" type="button" class="btn btn-primary btn-submit has-spinner" style="margin-right:1em; width:89px;">
                     <span id="uploadGlyph" class="glyphicon glyphicon-upload"></span>
                     Upload
                 </button>
+            </div>
+        </div>
+        <div class="row">
+            <div id="upload-feedback" class="col-sm-12">
+                
             </div>
         </div>
     </form>

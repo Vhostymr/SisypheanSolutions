@@ -191,6 +191,7 @@
     <Content Include="Content\CSS\news-feed.css" />
     <Content Include="Content\Fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Images\Profile.jpg" />
     <Content Include="Content\Images\sammy-icon-lg.png" />
     <Content Include="Content\Images\sammy-icon.png" />
     <Content Include="favicon.ico" />

@@ -188,45 +188,34 @@ namespace SisypheanSolutions.Controllers
             try
             {
                 Guid uniqueID = Guid.NewGuid();
-                string link = GenerateDownloadLink(uniqueID);
+                string link = GenerateDownloadLink(HttpContext, uniqueID);
+                byte[] fileBytes = null;
+                string fileName = "";
 
                 //More than one file, probably should be zipped.
                 if (files.Length > 1)
                 {
-                    byte[] zipBytes = ZipFiles(files);
-
-                    string fileName = "BundledArchive.zip";
-
-                    //The extension is added twice. Once for password checking, once for file.
-                    if (password != "")
-                    {
-                        zipBytes = EncryptFile(zipBytes, password);
-                        fileName = fileName + EncryptedExtension();
-                        fileName = Base64Encode(EncryptString(fileName, password));
-                        fileName = fileName + EncryptedExtension();
-                    }
-
-                    SaveFile(uniqueID, fileName, zipBytes);
+                    fileBytes = ZipFiles(files);
+                    fileName = "BundledFiles.zip";
                 }
 
                 //Doesn't need zipping.
                 else
                 {
-                    byte[] fileBytes = FileToByteArray(files[0]);
-                    string fileName = files[0].FileName;
-                    if (password != "")
-                    {
-                        //The extension is added twice. Once for password checking, once for file.
-                        fileName = fileName + EncryptedExtension();
-                        fileBytes = EncryptFile(fileBytes, password);
-                        fileName = Base64Encode(EncryptString(fileName, password));
-                        fileName = fileName + EncryptedExtension();
-                    }
-
-                    SaveFile(uniqueID, fileName, fileBytes);
+                    fileBytes = FileToByteArray(files[0]);
+                    fileName = files[0].FileName;
                 }
 
-                return Json(new { success = true });
+                //If file is encrypted.
+                if (!String.IsNullOrEmpty(password))
+                {
+                    fileBytes = EncryptFile(fileBytes, password);
+                    fileName = SetEncryptedFileName(password, fileName);
+                }
+
+                SaveFile(uniqueID, fileName, fileBytes);
+
+                return Json(new { success = true, link = link });
             }
 
             catch (Exception)
@@ -576,9 +565,25 @@ namespace SisypheanSolutions.Controllers
         /// </summary>
         /// <param name="uniqueID">The unique ID associated with the file download.</param>
         /// <returns>Returns a URL as a string.</returns>
-        private static string GenerateDownloadLink(Guid uniqueID)
+        private static string GenerateDownloadLink(HttpContextBase context, Guid uniqueID)
         {
-            return "~/Home/FileDownload/" + uniqueID;
+            return context.Request.Url.Authority + "/#/file/filedownload?uniqueID=" + uniqueID;
+        }
+
+        /// <summary>
+        /// Generates the file name for encrypted files.
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        private string SetEncryptedFileName(string password, string fileName)
+        {
+            //The extension is added twice. Once for password checking, once for file.
+            fileName = fileName + EncryptedExtension();
+            fileName = Base64Encode(EncryptString(fileName, password));
+            fileName = fileName + EncryptedExtension();
+
+            return fileName;
         }
         #endregion
     }

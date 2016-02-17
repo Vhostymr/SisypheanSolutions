@@ -18,3 +18,7 @@
     cursor: inherit;
     display: block;
 }
+
+.input-height {
+    height: 34px !important;
+}
