@@ -223,6 +223,10 @@ label {
     color: #FFF;
 }
 
+.wrap {
+    word-wrap: break-word;
+}
+
 @media (max-width:767px)
 {
     #content {
