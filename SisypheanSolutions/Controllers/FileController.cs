@@ -6,6 +6,7 @@ using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using System.Text;
+using System.Reflection;
 
 namespace SisypheanSolutions.Controllers
 {
@@ -465,7 +466,7 @@ namespace SisypheanSolutions.Controllers
         /// <returns>Returns a string containing the current file save location data. Useful to change once.</returns>
         private string GetFileLocation()
         {
-            return "D:\\EncryptedFiles\\";
+            return AppDomain.CurrentDomain.BaseDirectory + "Files\\";
         }
 
         /// <summary>
