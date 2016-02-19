@@ -54,6 +54,7 @@ body {
 
 .content-section {
     min-height: 45vh;
+    padding-bottom: 5rem;
 }
 
 div.navigation {
@@ -286,6 +287,14 @@ label {
 {
     .content-section {
         min-height: 25vh;
+    }
+
+    .help-block {
+        font-size: 1em !important;
+    }
+    .icon-parent-container {
+        padding: 35px 0px;
+        font-size: 1em;
     }
 
     .main-banner {
