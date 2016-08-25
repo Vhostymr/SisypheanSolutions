@@ -1,0 +1,181 @@
+﻿#login {
+    background: no-repeat center center #41414E;
+    background-size: cover;
+    box-shadow: 0px 20px 60px -5px #000;
+    color: #FFF;
+    position: relative;
+    height: 560px;
+    max-width: 405px;
+    width: 100%;
+    margin: auto;
+    padding: 60px 60px;
+    font-size: 14px;
+    letter-spacing: 1px;
+
+    .active {
+        border-bottom: 2px solid #00B2CA;
+    }
+
+    form {
+        margin-top: 1.5em;
+        width: 100%;
+        max-width: 100%;
+
+        >a {
+            color: #FFF;
+            text-align: center;
+            display: block;
+            top: 90px;
+            position: relative;
+            text-decoration: none;
+            opacity: 0.4;
+        }
+
+        .label-format {
+            display: inline-block;
+            padding-top: 30px;
+            padding-left: 10px;
+        }
+
+        #sign-in-checkbox {
+            margin-top: -3px;
+        }
+
+        .signin {
+            background-color: #00B2CA;
+            color: #FFF;
+            width: 100%;
+            padding: 10px 20px;
+            display: block;
+            height: 39px;
+            border-radius: 20px;
+            margin-top: 30px;
+            transition: all 0.2s ease-in-out;
+            border: none;
+            text-transform: uppercase;
+
+            &:hover {
+                background: #009CB1;
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        >span {
+            margin-left: 20px;
+
+            &.login-text {
+                text-transform: uppercase;
+                font-size: 12px;
+                opacity: 0.4;
+            }
+        }
+
+        .text {
+            border: none;
+            width: 100%;
+            padding: 10px 20px;
+            display: block;
+            height: 15px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0);
+            overflow: hidden;
+            margin-top: 7px;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .text:focus {
+            outline: 0;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0);
+        }
+    }
+
+    hr {
+        border: 1px solid #FFF;
+        top: 65px;
+        position: relative;
+        opacity: 0.1;
+    }
+
+    .inactive {
+        opacity: 0.2;
+    }
+
+    input {
+        display: inline-block;
+        padding-top: 20px;
+    }
+
+    input[type="checkbox"] ~ label:before {
+        content: "";
+        display: inline-block;
+        height: 15px;
+        width: 15px;
+        margin: 1px 4px 0 0;
+        vertical-align: middle;
+        border-radius: 15%;
+        border: solid 1px #54545F;
+        background-color: #54545F;
+        position: absolute;
+        top: 3px;
+        left: 0px;
+    }
+
+    input[type="checkbox"] ~ label:hover:before,
+    input[type="checkbox"]:checked ~ label:before {
+        border: solid 1px #54545F;
+        border-radius: 15%;
+        background-color: #54545F;
+    }
+
+    input[type="checkbox"]:checked ~ label:after {
+        content: '\2714';
+        position: absolute;
+        border-radius: 15%;
+        top: 0px;
+        left: 1px;
+        color: #00B2CA;
+    }
+
+    .login-heading {
+        padding-left: 10px;
+        font-size: 22px;
+        text-transform: uppercase;
+        padding-bottom: 5px;
+        letter-spacing: 2px;
+        display: inline-block;
+        font-weight: 100;
+        margin-left: 20px;
+
+        &:first-child {
+            padding-left: 0px;
+        }
+    }
+}
+
+/*Media Queries*/
+@media(max-width: 405px) {
+    #login {
+        padding: 15px 25px;
+        height: 450px;
+
+        form {
+            >a {
+                top: 70px;
+            }
+        }
+
+        hr {
+            margin-top: -20px;
+        }
+
+        .login-heading {
+            font-size: 18px;
+        }
+    }
+}

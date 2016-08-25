@@ -30,11 +30,11 @@ namespace SisypheanSolutions
                             "~/Scripts/routing.js"));
 
             bundles.Add(new StyleBundle("~/bundles/styles")
-                   .Include("~/Content/CSS/Core/bootstrap.min.css",
-                            "~/Content/CSS/Core/bootstrap.min.css.map",
-                            "~/Content/CSS/Core/bootstrap-dialog.min.css",
-                            "~/Content/CSS/Core/font-awesome.min.css",
-                            "~/Content/CSS/Core/*.css"));
+                   .Include("~/Content/CSS/bootstrap.min.css",
+                            "~/Content/CSS/bootstrap.min.css.map",
+                            "~/Content/CSS/bootstrap-dialog.min.css",
+                            "~/Content/CSS/font-awesome.min.css",
+                            "~/Content/CSS/*.css"));
         }
     }
 }

@@ -1,0 +1,16 @@
+﻿.btn-primary {
+    background-color: #00B2CA;
+    min-width: 100px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease-in-out;
+
+    &:hover,
+    &:focus,
+    &:active,
+    &:active:focus, 
+    &:active:hover {
+        background-color: #009cb1;
+        min-width: 100px;
+        border: 1px solid transparent;
+    }
+}

@@ -1,0 +1,17 @@
+﻿$primary-color: #00B2CA;
+
+/*Base*/
+@import "../SASS/Base/_common.scss";
+
+/*Components*/
+@import "../SASS/Components/_buttons.scss";
+@import "../SASS/Components/_checkbox.scss";
+
+/*Layout*/
+@import "../SASS/Layout/_about.scss";
+@import "../SASS/Layout/_file-upload.scss";
+@import "../SASS/Layout/_footer.scss";
+@import "../SASS/Layout/_header.scss";
+@import "../SASS/Layout/_homepage.scss";
+@import "../SASS/Layout/_login.scss";
+@import "../SASS/Layout/_news-feed.scss";

@@ -179,17 +179,30 @@
     <Compile Include="Utilities\Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\CSS\Core\bootstrap-dialog.min.css" />
-    <Content Include="Content\CSS\Core\bootstrap.min.css" />
-    <Content Include="Content\CSS\Core\alertify.clean.css" />
-    <Content Include="Content\CSS\Core\alertify.core.css" />
-    <Content Include="Content\CSS\Core\checkbox.css" />
-    <Content Include="Content\CSS\Core\font-awesome.min.css" />
-    <Content Include="Content\CSS\file-upload.css" />
-    <Content Include="Content\CSS\Core\site.css" />
-    <Content Include="Content\CSS\homepage.css" />
-    <Content Include="Content\CSS\login.css" />
-    <Content Include="Content\CSS\news-feed.css" />
+    <Content Include="Content\CSS\bootstrap-dialog.min.css" />
+    <Content Include="Content\CSS\bootstrap.min.css" />
+    <Content Include="Content\CSS\alertify.clean.css" />
+    <Content Include="Content\CSS\alertify.core.css" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <Content Include="Content\SASS\Components\_buttons.scss" />
+    <None Include="Content\SASS\Components\_checkbox.scss" />
+    <Content Include="Content\CSS\font-awesome.min.css" />
+    <Content Include="Content\CSS\styles.css" />
+    <Content Include="Content\CSS\styles.min.css">
+      <DependentUpon>styles.css</DependentUpon>
+    </Content>
+    <Content Include="Content\CSS\styles.scss" />
+    <Content Include="Content\SASS\Layout\_about.scss" />
+    <None Include="Content\SASS\Layout\_file-upload.scss" />
+    <None Include="Content\SASS\Base\_common.scss" />
+    <Content Include="Content\SASS\Layout\_footer.scss" />
+    <Content Include="Content\SASS\Layout\_header.scss" />
+    <None Include="Content\SASS\Layout\_homepage.scss" />
+    <None Include="Content\SASS\Layout\_login.scss" />
+    <None Include="Content\SASS\Layout\_news-feed.scss" />
     <Content Include="Content\Fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\Profile.jpg" />
@@ -200,7 +213,7 @@
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\alertify.min.js" />
-    <Content Include="Content\CSS\Core\bootstrap.min.css.map" />
+    <Content Include="Content\CSS\bootstrap.min.css.map" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.woff" />

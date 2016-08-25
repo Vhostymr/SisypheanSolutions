@@ -1,0 +1,33 @@
+﻿.navbar-inverse {
+    background-color: #41414E;
+    border: none;
+    flex: none;
+
+    .navbar-nav {
+        .active {
+            a {
+                &, &:focus, &:hover {
+                    color: #fff;
+                    background-color: inherit;
+                }
+            }
+        }
+
+        li {
+            color: #FFFFFF;
+            cursor: pointer;
+            border-bottom: none;
+            margin-right: 10px;
+
+            &.active, &:hover {
+                border-bottom: 5px solid #00B2CA;
+            }
+
+            a {
+                color: #CACACA;
+                line-height: 25px;
+                font-size: 16px;
+            }
+        }
+    }
+}
