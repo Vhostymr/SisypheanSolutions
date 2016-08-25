@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.ServiceModel.Syndication;
+﻿using System.Web.Mvc;
 using System.Xml;
 using System.Text;
+using SisypheanSolutions.Utilities;
 
 namespace SisypheanSolutions.Controllers
 {
@@ -34,7 +28,7 @@ namespace SisypheanSolutions.Controllers
             return PartialView("_About");
         }
 
-        private string ParseRssFile()
+        private static string ParseRssFile()
         {
             XmlDocument rssXmlDoc = new XmlDocument();
 
@@ -46,25 +40,27 @@ namespace SisypheanSolutions.Controllers
 
             StringBuilder rssContent = new StringBuilder();
 
+            if (rssNodes == null) return "No feed available.";
+
             // Iterate through the items in the RSS file
             foreach (XmlNode rssNode in rssNodes)
             {
                 XmlNode rssSubNode = rssNode.SelectSingleNode("title");
-                string title = rssSubNode != null ? rssSubNode.InnerText : "";
+                string title = rssSubNode?.InnerText ?? "";
 
                 title = "Web Development Reading List, Issue " + title + "<br>";
 
                 rssSubNode = rssNode.SelectSingleNode("link");
-                string link = rssSubNode != null ? rssSubNode.InnerText : "";
+                string link = rssSubNode?.InnerText ?? "";
 
                 rssSubNode = rssNode.SelectSingleNode("description");
-                string description = rssSubNode != null ? rssSubNode.InnerText : "";
+                string description = rssSubNode?.InnerText ?? "";
 
                 rssContent.Append("<a href='" + link + "'>" + title + "</a><br>" + description + "<br><br><br><br><br><br>");
             }
 
-            // Return the string that contain the RSS items
-            return rssContent.ToString();
+            // Return the string that contain the RSS items and remove the promotional GetPocket links.
+            return rssContent.ToString().ReplaceAll("<a class=\"save-service-link\"", "</a>");
         }
     }
 }
