@@ -6,7 +6,6 @@ using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using System.Text;
-using System.Reflection;
 
 namespace SisypheanSolutions.Controllers
 {
@@ -63,7 +62,7 @@ namespace SisypheanSolutions.Controllers
 
             catch (Exception exception)
             {
-                if (exception is InvalidOperationException && exception.InnerException.Message == "Sequence contains more than one matching element.")
+                if (exception is InvalidOperationException && exception.InnerException?.Message == "Sequence contains more than one matching element.")
                 {
                     return Redirect("/#/duplicate-file");
                 }
@@ -202,7 +201,7 @@ namespace SisypheanSolutions.Controllers
                 if (files.Length > 1)
                 {
                     fileBytes = ZipFiles(files);
-                    fileName = "BundledFiles.zip";
+                    fileName = "BundledFiles" + ZipExtension();
                 }
 
                 //Doesn't need zipping.
@@ -221,7 +220,7 @@ namespace SisypheanSolutions.Controllers
 
                 SaveFile(uniqueID, fileName, fileBytes);
 
-                return Json(new { success = true, link = link });
+                return Json(new { success = true, link });
             }
 
             catch (Exception)
@@ -286,7 +285,7 @@ namespace SisypheanSolutions.Controllers
         /// <summary>
         /// Decrypts a file from a given byte[] with the provided password.
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="bytesToBeDecrypted"></param>
         /// <param name="password"></param>
         /// <returns></returns>
         private byte[] DecryptFile(byte[] bytesToBeDecrypted, string password)
@@ -449,6 +448,7 @@ namespace SisypheanSolutions.Controllers
         /// Removes the extension on the end of a file.
         /// </summary>
         /// <param name="fileName">The file name to have the extension removed.</param>
+        /// <param name="extension"></param>
         /// <returns>Returns the file name without the extension.</returns>
         private string RemoveExtension(string fileName, string extension)
         {
@@ -569,11 +569,12 @@ namespace SisypheanSolutions.Controllers
         /// <summary>
         /// Generates the URL for the file download from the uniqueID parameter.
         /// </summary>
+        /// <param name="context"></param>
         /// <param name="uniqueID">The unique ID associated with the file download.</param>
         /// <returns>Returns a URL as a string.</returns>
         private static string GenerateDownloadLink(HttpContextBase context, Guid uniqueID)
         {
-            return context.Request.Url.Authority + "/#/file/filedownload?uniqueID=" + uniqueID;
+            return context?.Request?.Url?.Authority + "/#/file/filedownload?uniqueID=" + uniqueID;
         }
 
         /// <summary>
