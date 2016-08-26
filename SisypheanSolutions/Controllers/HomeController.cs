@@ -1,6 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Xml;
 using System.Text;
+using System.Web;
 using SisypheanSolutions.Utilities;
 
 namespace SisypheanSolutions.Controllers
@@ -19,7 +21,7 @@ namespace SisypheanSolutions.Controllers
 
         public ActionResult News()
         {
-            string feed = ParseRssFile();
+            string feed = ParseRssFile(System.Web.HttpContext.Current);
             return PartialView("_News", feed);
         }
 
@@ -28,8 +30,16 @@ namespace SisypheanSolutions.Controllers
             return PartialView("_About");
         }
 
-        private static string ParseRssFile()
+        private static string ParseRssFile(HttpContext context)
         {
+            const string cachedFeed = "RssFeed";
+
+            //Get feed if it is in the cache.
+            string feed = context.Cache[cachedFeed] as string ?? "";
+
+            //Return cached feed.
+            if (!string.IsNullOrEmpty(feed)) return feed;
+
             XmlDocument rssXmlDoc = new XmlDocument();
 
             // Load the RSS file from the RSS URL
@@ -60,7 +70,12 @@ namespace SisypheanSolutions.Controllers
             }
 
             // Return the string that contain the RSS items and remove the promotional GetPocket links.
-            return rssContent.ToString().ReplaceAll("<a class=\"save-service-link\"", "</a>");
+            string output = rssContent.ToString().ReplaceAll("<a class=\"save-service-link\"", "</a>");
+
+            //Cache the feed for an hour.
+            context.Cache.Insert(cachedFeed, output, null, DateTime.UtcNow.AddMinutes(60), System.Web.Caching.Cache.NoSlidingExpiration);
+
+            return output;
         }
     }
 }
