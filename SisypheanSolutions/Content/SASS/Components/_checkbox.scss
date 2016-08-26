@@ -1,14 +1,15 @@
-﻿input[type=checkbox], input[type=radio] {
+﻿/// <reference path="../_variables.scss" />
+
+input[type=checkbox], input[type=radio] {
     vertical-align: middle;
     margin: 0;
 }
 
 input[type="checkbox"] ~ label {
-    cursor:pointer;
+    cursor: pointer;
     outline: none;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -48,7 +49,7 @@ input[type="checkbox"]:checked ~ label:after {
     content: '\2714';
     position: absolute;
     border-radius: 20%;
-    top: -1px;
+    top: 1px;
     left: 18px;
     color: #808080;
 }

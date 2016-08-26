@@ -38,10 +38,24 @@
             <div class="container">
                 <div class="footer">
                     <footer>
-                        <p>&copy; @DateTime.Now.Year Brandon Hurler</p>
+                        <div class="row">
+                            <div class="col-sm-offset-3 col-sm-6 icon-parent-container">
+                                <a class="icon-anchor" href="https://www.linkedin.com/in/brandon-hurler-18382bb1">
+                                    <div class="icon-container">
+                                        <span class="icon">
+                                            <i class="fa fa-linkedin-square"></i>
+                                        </span>
+                                    </div>
+                                    <div class="icon-container">
+                                        <span>View my LinkedIn</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                     </footer>
                 </div>
             </div>
+            <p class="copyright">&copy; @DateTime.Now.Year Brandon Hurler</p>
         </div>
 
         @RenderSection("scripts", required: false)

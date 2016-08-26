@@ -1,10 +1,63 @@
-﻿#homepage {
+﻿/// <reference path="../_variables.scss" />
+
+#homepage {
+    .banner-section {
+        min-height: 15vh;
+    }
+
+    .content-section {
+        min-height: 35vh;
+    }
+
     .help-block {
+        font-size: $smText;
+        margin-bottom: 3em;
+    }
+
+    .icon-parent-container {
+        padding: 35px 0px;
         font-size: 1.5em;
+
+        .icon-anchor,
+        .icon-anchor:hover,
+        .icon-anchor:active,
+        .icon-anchor:focus {
+            color: #fff;
+            text-decoration: none;
+            outline: none;
+
+            .icon-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+
+                .icon {
+                    display: inline-block;
+                    font-size: 60px;
+                    height: 60px;
+                    width: 60px;
+                    line-height: 60px;
+                }
+            }
+        }
+    }
+
+    .icon-text {
+        font-size: $default;
+    }
+
+    .icon-text-mobile {
+        display: none;
     }
 
     .inline {
         display: inline;
+    }
+
+    .main-banner {
+        font-size: $xxlText;
+        margin-top: 10vh;
     }
 
     .max-icon {
@@ -14,6 +67,93 @@
 
     .sub-section-font {
         color: #777;
-        font-size: 3.5em;
+        font-size: $smText;
+
+        &:active,
+        &:focus,
+        &:hover,
+        &:visited {
+            color: $primaryColor;
+            text-decoration: none;
+            outline: none;
+        }
+
+        i {
+            font-size: 200%;
+            margin-right: 15px;
+        }
+    }
+}
+
+@media($smallDesktop) {
+    #homepage {
+        .content-section {
+            min-height: 35vh;
+        }
+
+        .help-block {
+            font-size: $default;
+        }
+
+        .icon-parent-container {
+            font-size: 1em;
+        }
+
+        .main-banner {
+            font-size: $lgText;
+        }
+
+        .sub-section-font {
+            font-size: $smText;
+        }
+    }
+}
+
+@media($tablet) {
+    #homepage {
+        .content-section {
+            min-height: 25vh;
+        }
+
+        .icon-parent-container {
+            .icon-text {
+                display: none;
+            }
+
+            .icon-text-mobile {
+                display: block;
+                font-size: $xsText;
+            }
+        }
+
+        .main-banner {
+            margin-top: 7vh;
+            margin-bottom: 7vh;
+        }
+
+        .sub-section-font {
+            font-size: $default;
+            margin-top: 3em;
+        }
+    }
+}
+
+@media($mobile) {
+    #homepage {
+        .content-section {
+            min-height: 20vh;
+        }
+
+        .help-block:last-of-type {
+            margin-bottom: 75px;
+        }
+
+        .icon-parent-container {
+            font-size: 1.25em;
+        }
+
+        .main-banner {
+            font-size: $lgText;
+        }
     }
 }

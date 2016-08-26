@@ -1,6 +1,45 @@
-﻿.footer {
-    margin-top: 2em;
-    margin-bottom: 2em;
+﻿/// <reference path="../_variables.scss" />
+
+.footer {
+    position: relative;
+
+    p.copyright {
+        position: absolute;
+        bottom:5px;
+        left: 5px;
+    }
+
+    .icon {
+        display: inline-block;
+        font-size: 60px;
+        height: 60px;
+        width: 60px;
+        line-height: 60px;
+    }
+
+    .icon-anchor,
+    .icon-anchor:hover,
+    .icon-anchor:active,
+    .icon-anchor:focus {
+        color: #fff;
+        text-decoration: none;
+        outline: none;
+    }
+
+    .icon-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .icon-parent-container {
+        padding: 35px 0px;
+        font-size: 1.5em;
+    }
+
+    .icon-text {
+        font-size: $default;
+    }
 }
 
 .footer-background {
@@ -18,4 +57,20 @@
 
 .footer-text {
     color: #CACACA;
+}
+
+@media($mobile) {
+    .footer  {
+        .icon-parent-container {
+            font-size: 1.25em;
+
+            .icon-text {
+                display: none;
+            }
+
+            .icon-text-mobile {
+                font-size: $xsText;
+            }
+        }
+    }
 }

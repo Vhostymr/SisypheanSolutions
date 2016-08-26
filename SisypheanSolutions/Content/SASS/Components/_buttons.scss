@@ -1,4 +1,6 @@
-﻿.btn-primary {
+﻿/// <reference path="../_variables.scss" />
+
+.btn-primary {
     background-color: #00B2CA;
     min-width: 100px;
     border: 1px solid transparent;
@@ -7,7 +9,7 @@
     &:hover,
     &:focus,
     &:active,
-    &:active:focus, 
+    &:active:focus,
     &:active:hover {
         background-color: #009cb1;
         min-width: 100px;

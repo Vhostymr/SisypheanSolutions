@@ -48,7 +48,7 @@ namespace SisypheanSolutions.Controllers
                 XmlNode rssSubNode = rssNode.SelectSingleNode("title");
                 string title = rssSubNode?.InnerText ?? "";
 
-                title = "Web Development Reading List, Issue " + title + "<br>";
+                title = "Web Development Reading List, Issue " + title;
 
                 rssSubNode = rssNode.SelectSingleNode("link");
                 string link = rssSubNode?.InnerText ?? "";
@@ -56,7 +56,7 @@ namespace SisypheanSolutions.Controllers
                 rssSubNode = rssNode.SelectSingleNode("description");
                 string description = rssSubNode?.InnerText ?? "";
 
-                rssContent.Append("<a href='" + link + "'>" + title + "</a><br>" + description + "<br><br><br><br><br><br>");
+                rssContent.Append("<a href='" + link + "'>" + title + "</a>" + description);
             }
 
             // Return the string that contain the RSS items and remove the promotional GetPocket links.

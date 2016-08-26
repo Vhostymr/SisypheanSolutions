@@ -1,13 +1,15 @@
-﻿.absolute {
+﻿/// <reference path="../_variables.scss" />
+
+.absolute {
     position: absolute;
 }
 
 .background {
-    background-color: $primary-color;
+    background-color: $primaryColor;
 }
 
 .background-container {
-    background-color: $primary-color;
+    background-color: $primaryColor;
     width: 100%;
 }
 
@@ -17,79 +19,51 @@
     min-height: 350px;
 }
 
-.banner-section {
-    min-height: 15vh;
-}
-
 body {
-    font-size: 14px;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: 0.225px;
+    color: #555;
+    width: 100%;
+    overflow-x: hidden;
+
+    h1 {
+        font-size: $xlText;
+    }
+
+    h2 {
+        font-size: $lgText;
+    }
+
+    h3 {
+        font-size: $mdText;
+    }
+
+    h4 {
+        font-size: $smText;
+    }
+
+    h5 {
+        font-size: $smText;
+    }
+
+    h6 {
+        font-size: $default;
+    }
 }
 
 .border-bottom {
     border-bottom: 1px solid #dfdfdf;
 }
 
-.content-section {
-    min-height: 35vh;
-}
-
 div.navigation {
     cursor: pointer;
 }
 
-.sub-section-font:active,
-.sub-section-font:focus,
-.sub-section-font:hover,
-.sub-section-font:visited {
-    color: $primary-color;
-    text-decoration: none;
-    outline: none;
-}
-
-h1, h2, h3 {
-    font-family: 'Open Sans', sans-serif;
-}
-
-h4, h5, h6 {
-    font-family: 'Open Sans', sans-serif;
-}
-
-.icon {
-    display: inline-block;
-    font-size: 60px;
-    height: 60px;
-    width: 60px;
-    line-height: 60px;
-}
-
-.icon-anchor,
-.icon-anchor:hover,
-.icon-anchor:active,
-.icon-anchor:focus {
-    color: #fff;
-    text-decoration: none;
-    outline: none;
-}
-
-.icon-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.icon-parent-container {
-    padding: 35px 0px;
-    font-size: 1.5em;
-}
-
 label {
-    font-size: 17px;
     font-weight: lighter;
-}
-
-.main-banner {
-    font-size: 3em;
-    margin-top: 10vh;
 }
 
 .margin-bottom {
@@ -147,12 +121,6 @@ label {
     flex-direction: column;
 }
 
-@media (max-width:767px) {
-    #content {
-        min-height: inherit;
-    }
-}
-
 /***************************
     Global Error CSS
 ****************************/
@@ -160,84 +128,57 @@ label {
 .error-heading {
     margin-top: 2.5em;
     margin-bottom: 0.5em;
-    font-size: 64px;
+    font-size: $xlText;
     text-align: center;
     color: #03244d;
 }
 
 .error-body {
-    font-size: 28px;
+    font-size: $lgText;
     text-align: center;
     color: #496e9c;
 }
 
-@media (max-width:992px) {
-    .content-section {
-        min-height: 35vh;
-    }
-
-    .main-banner {
-        font-size: 3em;
-        margin-top: 5vh;
-        margin-bottom: 5vh;
-    }
-}
-
 @media (max-width:767px) {
-    .main-banner {
-        font-size: 2.5em;
-        margin-top: 4vh;
-        margin-bottom: 4vh;
-    }
-
     .error-heading {
         margin-top: inherit;
-        font-size: 48px;
+        font-size: $xlText;
         text-align: center;
         color: #03244d;
     }
 
     .error-body {
-        font-size: 24px;
+        font-size: $lgText;
         text-align: center;
         color: #496e9c;
     }
 }
 
 @media (max-width:530px) {
-    .content-section {
-        min-height: 20vh;
-    }
-
-    .help-block {
-        font-size: 1em !important;
-    }
-
-    .icon-parent-container {
-        padding: 35px 0px;
-        font-size: 1em;
-    }
-
-    .main-banner {
-        font-size: 2em;
-        margin-top: 0vh;
-        margin-bottom: 10vh;
-    }
-
     .error-heading {
         margin-top: inherit;
-        font-size: 32px;
+        font-size: $lgText;
         text-align: center;
         color: #03244d;
     }
 
     .error-body {
-        font-size: 18px;
+        font-size: $mdText;
         text-align: center;
         color: #496e9c;
     }
 
     .margin-top {
         margin-top: 10px;
+    }
+}
+
+@media (max-width: 550px) {
+    body {
+        font-size: 14px;
+
+        #main-content {
+            margin-top: 50px;
+        }
     }
 }

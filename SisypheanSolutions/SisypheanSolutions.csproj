@@ -188,6 +188,7 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <Content Include="Content\SASS\Components\_buttons.scss" />
+    <Content Include="Content\SASS\_variables.scss" />
     <None Include="Content\SASS\Components\_checkbox.scss" />
     <Content Include="Content\CSS\font-awesome.min.css" />
     <Content Include="Content\CSS\styles.css" />

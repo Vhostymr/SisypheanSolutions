@@ -1,33 +1,49 @@
-﻿.btn-file {
-    position: relative;
-    overflow: hidden;
+﻿/// <reference path="../_variables.scss" />
 
-    input[type=file] {
-        position: absolute;
-        top: 0;
-        right: 0;
-        min-width: 100%;
-        min-height: 100%;
-        font-size: 100px;
-        text-align: right;
-        filter: alpha(opacity=0);
-        opacity: 0;
-        outline: none;
-        background: white;
-        cursor: inherit;
-        display: block;
+#file-upload-section {
+    h2 {
+        margin-bottom: 2em;
     }
-}
 
-.download-link-text {
-    font-size: 18px;
-    color: grey;
-}
+    .btn-file {
+        position: relative;
+        overflow: hidden;
 
-.input-height {
-    height: 34px !important;
-}
+        input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+    }
 
-#upload-feedback {
-    margin-top: 7rem;
+    .checkbox-field {
+        margin-bottom: 0.25em;
+    }
+
+    .download-link-text {
+        font-size: $lgText;
+        color: grey;
+    }
+
+    .input-height {
+        height: 34px !important;
+    }
+
+    input[type="checkbox"] ~ label {
+        vertical-align: middle;
+    }
+
+    #upload-feedback {
+        margin-top: 7rem;
+    }
 }
