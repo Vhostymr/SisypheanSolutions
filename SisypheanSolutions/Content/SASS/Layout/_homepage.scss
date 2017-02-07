@@ -5,13 +5,17 @@
         min-height: 15vh;
     }
 
-    .content-section {
-        min-height: 35vh;
+    .banner-background { 
+        background: url('/Content/Images/background.jpg'); 
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
     }
 
     .help-block {
         font-size: $smText;
-        margin-bottom: 3em;
+        margin-bottom: 0;
     }
 
     .icon-parent-container {
@@ -56,13 +60,24 @@
     }
 
     .main-banner {
-        font-size: $xxlText;
-        margin-top: 10vh;
+        font-size: $xlText;
+        background-color: white;
+        padding: 70px;
+        border-radius: 10px;
     }
 
     .max-icon {
         max-height: 60px;
         max-width: 60px;
+    }
+
+    .overlay { 
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
     }
 
     .sub-section-font {
@@ -126,14 +141,8 @@
             }
         }
 
-        .main-banner {
-            margin-top: 7vh;
-            margin-bottom: 7vh;
-        }
-
         .sub-section-font {
             font-size: $default;
-            margin-top: 3em;
         }
     }
 }
@@ -142,10 +151,6 @@
     #homepage {
         .content-section {
             min-height: 20vh;
-        }
-
-        .help-block:last-of-type {
-            margin-bottom: 75px;
         }
 
         .icon-parent-container {

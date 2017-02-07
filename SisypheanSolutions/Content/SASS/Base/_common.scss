@@ -10,7 +10,6 @@
 
 .background-container {
     background-color: $primaryColor;
-    width: 100%;
 }
 
 .background-overlay {
@@ -58,6 +57,15 @@ body {
     border-bottom: 1px solid #dfdfdf;
 }
 
+.content-section {
+    min-height: 35vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    &.alternate { background-color: #efefef; }
+}
+
 div.navigation {
     cursor: pointer;
 }
@@ -66,16 +74,8 @@ label {
     font-weight: lighter;
 }
 
-.margin-bottom {
-    margin-bottom: 10px;
-}
-
 #main-content {
-    margin-top: 75px;
-}
-
-.margin-top {
-    margin-top: 30px;
+    flex: 1;   
 }
 
 .noselect {
@@ -99,8 +99,9 @@ label {
 }
 
 .site-content {
-    flex: 1 0 auto;
-    width: 100%;
+    flex: 1;
+    align-items: center;
+    display: flex;
 
     .container {
         max-width: 970px;
@@ -117,7 +118,7 @@ label {
 
 .wrapper {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     flex-direction: column;
 }
 
@@ -167,18 +168,10 @@ label {
         text-align: center;
         color: #496e9c;
     }
-
-    .margin-top {
-        margin-top: 10px;
-    }
 }
 
 @media (max-width: 550px) {
     body {
         font-size: 14px;
-
-        #main-content {
-            margin-top: 50px;
-        }
     }
 }
