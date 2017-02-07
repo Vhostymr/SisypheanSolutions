@@ -279,6 +279,8 @@ label > span {
     display: flex;
     justify-content: center;
     align-items: center; }
+    .footer .icon-container p {
+      font-size: 16px; }
   .footer .icon-parent-container {
     padding: 35px 0px;
     font-size: 1.5em; }
