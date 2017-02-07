@@ -187,7 +187,6 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <Content Include="Content\Images\background.jpg" />
     <Content Include="Content\SASS\Components\_buttons.scss" />
     <Content Include="Content\SASS\_variables.scss" />
     <None Include="Content\SASS\Components\_checkbox.scss" />
