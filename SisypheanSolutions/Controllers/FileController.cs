@@ -1,16 +1,17 @@
-﻿using System;
-using System.IO.Compression;
+﻿using SisypheanSolutions.Utilities;
+using System;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
-using System.IO;
 using System.Web;
 using System.Web.Mvc;
-using System.Text;
 
 namespace SisypheanSolutions.Controllers
 {
     public class FileController : Controller
     {
+        private readonly FileExtensions _fileExtensions = new FileExtensions();
+
         public ActionResult FileManagerPartial()
         {
             return PartialView("_FileUpload");
@@ -33,11 +34,12 @@ namespace SisypheanSolutions.Controllers
         /// </summary>
         /// <param name="uniqueID"></param>
         /// <returns></returns>
+        [HttpGet]
         public ActionResult FileDownload(string uniqueID)
         {
             try
             {
-                var files = Directory.GetFiles(GetFileLocation());
+                var files = Directory.GetFiles(FileExtensions.GetFileLocation());
                 string path = files.SingleOrDefault(item => item.Contains(uniqueID));
 
                 if (String.IsNullOrEmpty(path))
@@ -45,19 +47,16 @@ namespace SisypheanSolutions.Controllers
                     return Redirect("/#/file-not-found");
                 }
 
-                string fileName = GetFileName(path);
+                string fileName = FileExtensions.GetFileName(path);
 
-                if (path.EndsWith(EncryptedExtension()))
+                if (path.EndsWith(FileExtensions.EncryptedExtension()))
                 {
                     return Redirect("/#/file-download?uniqueID=" + uniqueID);
                 }
 
-                else
-                {
-                    byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+                byte[] fileBytes = System.IO.File.ReadAllBytes(path);
 
-                    return ReturnFile(fileName, fileBytes);
-                }
+                return ReturnFile(fileName, fileBytes);
             }
 
             catch (Exception exception)
@@ -85,7 +84,7 @@ namespace SisypheanSolutions.Controllers
         {
             try
             {
-                string[] files = Directory.GetFiles(GetFileLocation());
+                string[] files = Directory.GetFiles(FileExtensions.GetFileLocation());
                 string path = files.SingleOrDefault(item => item.Contains(uniqueID));
 
                 if (String.IsNullOrEmpty(path))
@@ -93,16 +92,16 @@ namespace SisypheanSolutions.Controllers
                     return Redirect("/#/file-not-found");
                 }
 
-                string fileName = Base64Decode(GetFileName(path));
-                fileName = DecryptString(fileName, password);
+                string fileName = EncryptionExtensions.Base64Decode(FileExtensions.GetFileName(path));
+                fileName = EncryptionExtensions.DecryptString(fileName, password);
 
-                if (!fileName.Contains(EncryptedExtension()))
+                if (!fileName.Contains(FileExtensions.EncryptedExtension()))
                 {
                     return PartialView("_DownloadError");
                 }
 
                 byte[] bytesToBeDecrypted = System.IO.File.ReadAllBytes(path);
-                byte[] decryptedBytes = DecryptFile(bytesToBeDecrypted, password);
+                byte[] decryptedBytes = EncryptionExtensions.DecryptFile(bytesToBeDecrypted, password);
 
                 return ReturnFile(fileName, decryptedBytes);
             }
@@ -125,43 +124,42 @@ namespace SisypheanSolutions.Controllers
         {
             try
             {
-                string[] files = Directory.GetFiles(GetFileLocation());
+                string[] errors;
+                string[] files = Directory.GetFiles(FileExtensions.GetFileLocation());
                 string path = files.SingleOrDefault(item => item.Contains(uniqueID));
 
                 if (String.IsNullOrEmpty(path))
                 {
-                    string[] errors = { "The file you were looking for was not found." };
+                    errors = new[] { "The file you were looking for was not found." };
                     return Json(new { success = false, errors });
                 }
 
-                string fileName = Base64Decode(GetFileName(path));
-                fileName = DecryptString(fileName, password);
+                string fileName = EncryptionExtensions.Base64Decode(FileExtensions.GetFileName(path));
+                fileName = EncryptionExtensions.DecryptString(fileName, password);
 
-                if (fileName.Contains(EncryptedExtension()))
+                if (fileName.Contains(FileExtensions.EncryptedExtension()))
                 {
                     return Json(new { success = true });
                 }
 
-                else
-                {
-                    string[] errors = { "The password entered is incorrect. Please try again." };
-                    return Json(new { success = false, errors });
-                }
+                errors = new[] { "The password entered is incorrect. Please try again." };
+                return Json(new { success = false, errors });
             }
 
             catch (Exception exception)
             {
+                string[] errors;
                 if (exception is CryptographicException)
                 {
-                    string[] errors = { "The password entered is incorrect. Please try again." };
-                    return Json(new { success = false, errors });
+                    errors = new[] { "The password entered is incorrect. Please try again." };
                 }
 
                 else
                 {
-                    string[] errors = { "There was a problem processing your download." };
-                    return Json(new { success = false, errors });
+                    errors = new[] { "There was a problem processing your download." };
                 }
+
+                return Json(new { success = false, errors });
             }
         }
 
@@ -192,33 +190,33 @@ namespace SisypheanSolutions.Controllers
         {
             try
             {
+                byte[] fileBytes;
+                string fileName;
                 Guid uniqueID = Guid.NewGuid();
-                string link = GenerateDownloadLink(HttpContext, uniqueID);
-                byte[] fileBytes = null;
-                string fileName = "";
+                string link = FileExtensions.GenerateDownloadLink(HttpContext, uniqueID);
 
                 //More than one file, probably should be zipped.
                 if (files.Length > 1)
                 {
-                    fileBytes = ZipFiles(files);
-                    fileName = "BundledFiles" + ZipExtension();
+                    fileBytes = FileExtensions.ZipFiles(files);
+                    fileName = "BundledFiles" + FileExtensions.ZipExtension();
                 }
 
                 //Doesn't need zipping.
                 else
                 {
-                    fileBytes = FileToByteArray(files[0]);
+                    fileBytes = FileExtensions.FileToByteArray(files[0]);
                     fileName = files[0].FileName;
                 }
 
                 //If file is encrypted.
                 if (!String.IsNullOrEmpty(password))
                 {
-                    fileBytes = EncryptFile(fileBytes, password);
-                    fileName = SetEncryptedFileName(password, fileName);
+                    fileBytes = EncryptionExtensions.EncryptFile(fileBytes, password);
+                    fileName = FileExtensions.SetEncryptedFileName(password, fileName);
                 }
 
-                SaveFile(uniqueID, fileName, fileBytes);
+                FileExtensions.SaveFile(uniqueID, fileName, fileBytes);
 
                 return Json(new { success = true, link });
             }
@@ -231,304 +229,6 @@ namespace SisypheanSolutions.Controllers
         }
 
         /// <summary>
-        /// Accepts an array of files and adds them to a zip archive, in memory.
-        /// 
-        /// Returns the byte[] of the zipped stream.
-        /// </summary>
-        /// <param name="files"></param>
-        /// <returns></returns>
-        private byte[] ZipFiles(HttpPostedFileBase[] files)
-        {
-            using (var compressedFileStream = new MemoryStream())
-            {
-                //Create an archive and store the stream in memory.
-                using (var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Update, false))
-                {
-                    foreach (var file in files)
-                    {
-                        //Create a zip entry for each attachment.
-                        var zipEntry = zipArchive.CreateEntry(file.FileName);
-
-                        byte[] fileBytes = FileToByteArray(file);
-
-                        //Get the stream of the attachment
-                        using (var originalFileStream = new MemoryStream(fileBytes))
-                        {
-                            using (var zipEntryStream = zipEntry.Open())
-                            {
-                                //Copy the attachment stream to the zip entry stream
-                                originalFileStream.CopyTo(zipEntryStream);
-                            }
-                        }
-                    }
-                }
-
-                return compressedFileStream.ToArray();
-            }
-        }
-
-        #region Encryption
-        /// <summary>
-        /// Encrypts a file from a given byte[] with the provided password.
-        /// </summary>
-        /// <param name="bytesToBeEncrypted"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        private byte[] EncryptFile(byte[] bytesToBeEncrypted, string password)
-        {
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-            passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
-
-            return AES_Encrypt(bytesToBeEncrypted, passwordBytes);
-        }
-
-        /// <summary>
-        /// Decrypts a file from a given byte[] with the provided password.
-        /// </summary>
-        /// <param name="bytesToBeDecrypted"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        private byte[] DecryptFile(byte[] bytesToBeDecrypted, string password)
-        {
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-            passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
-
-            return AES_Decrypt(bytesToBeDecrypted, passwordBytes);
-        }
-
-        /// <summary>
-        /// Encrypts a string with the given password.
-        /// </summary>
-        /// <param name="input"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public string EncryptString(string input, string password)
-        {
-            // Get the bytes of the string
-            byte[] bytesToBeEncrypted = Encoding.UTF8.GetBytes(input);
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-
-            // Hash the password with SHA256
-            passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
-
-            byte[] bytesEncrypted = AES_Encrypt(bytesToBeEncrypted, passwordBytes);
-
-            string encryptedString = Convert.ToBase64String(bytesEncrypted);
-
-            return encryptedString;
-        }
-
-        /// <summary>
-        /// Decrypts a string with the appropriate password.
-        /// </summary>
-        /// <param name="input"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public string DecryptString(string input, string password)
-        {
-            // Get the bytes of the string
-            byte[] bytesToBeDecrypted = Convert.FromBase64String(input);
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-            passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
-
-            byte[] bytesDecrypted = AES_Decrypt(bytesToBeDecrypted, passwordBytes);
-
-            string decryptedString = Encoding.UTF8.GetString(bytesDecrypted);
-
-            return decryptedString;
-        }
-
-        /// <summary>
-        /// Encrypts byte[] with 256 AES Encryption.
-        /// </summary>
-        /// <param name="bytesToBeEncrypted"></param>
-        /// <param name="passwordBytes"></param>
-        /// <returns></returns>
-        private byte[] AES_Encrypt(byte[] bytesToBeEncrypted, byte[] passwordBytes)
-        {
-            byte[] encryptedBytes = null;
-            byte[] saltBytes = GetRandomBytes();
-
-            using (MemoryStream memorystream = new MemoryStream())
-            {
-                using (RijndaelManaged AES = new RijndaelManaged())
-                {
-                    AES.KeySize = 256;
-                    AES.BlockSize = 128;
-
-                    var key = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 1000);
-                    AES.Key = key.GetBytes(AES.KeySize / 8);
-                    AES.IV = key.GetBytes(AES.BlockSize / 8);
-
-                    AES.Mode = CipherMode.CBC;
-
-                    using (var cryptostream = new CryptoStream(memorystream, AES.CreateEncryptor(), CryptoStreamMode.Write))
-                    {
-                        cryptostream.Write(bytesToBeEncrypted, 0, bytesToBeEncrypted.Length);
-                        cryptostream.Close();
-                    }
-
-                    encryptedBytes = memorystream.ToArray();
-                }
-            }
-
-            return encryptedBytes;
-        }
-
-        /// <summary>
-        /// Decrypts AES encrypted byte[].
-        /// </summary>
-        /// <param name="bytesToBeDecrypted"></param>
-        /// <param name="passwordBytes"></param>
-        /// <returns></returns>
-        private byte[] AES_Decrypt(byte[] bytesToBeDecrypted, byte[] passwordBytes)
-        {
-            byte[] decryptedBytes = null;
-            byte[] saltBytes = GetRandomBytes();
-
-            using (MemoryStream memorystream = new MemoryStream())
-            {
-                using (RijndaelManaged AES = new RijndaelManaged())
-                {
-                    AES.KeySize = 256;
-                    AES.BlockSize = 128;
-
-                    var key = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 1000);
-                    AES.Key = key.GetBytes(AES.KeySize / 8);
-                    AES.IV = key.GetBytes(AES.BlockSize / 8);
-
-                    AES.Mode = CipherMode.CBC;
-
-                    using (var cryptostream = new CryptoStream(memorystream, AES.CreateDecryptor(), CryptoStreamMode.Write))
-                    {
-                        cryptostream.Write(bytesToBeDecrypted, 0, bytesToBeDecrypted.Length);
-                        cryptostream.Close();
-                    }
-
-                    decryptedBytes = memorystream.ToArray();
-                }
-            }
-
-            return decryptedBytes;
-        }
-
-        private byte[] GetRandomBytes()
-        {
-            //int size = 16;
-            //byte[] bytes = new byte[size];
-
-            //RNGCryptoServiceProvider.Create().GetBytes(bytes);
-
-            //Not Random Currently.
-            byte[] bytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8 };
-
-            return bytes;
-        }
-        #endregion
-
-        #region Private Methods
-
-        /// <summary>
-        /// Gets just the name of the file, minus the path and extension, from a string.
-        /// </summary>
-        /// <param name="file">The file name.</param>
-        /// <returns>Returns the file name without the path and extension.</returns>
-        private string GetFileName(string file)
-        {
-            int delimiterIndex = file.IndexOf('.', 0);
-
-            string fileName = file.Substring(delimiterIndex + 1);
-
-            fileName = RemoveExtension(fileName, EncryptedExtension());
-
-            return fileName;
-        }
-
-        /// <summary>
-        /// Removes the extension on the end of a file.
-        /// </summary>
-        /// <param name="fileName">The file name to have the extension removed.</param>
-        /// <param name="extension"></param>
-        /// <returns>Returns the file name without the extension.</returns>
-        private string RemoveExtension(string fileName, string extension)
-        {
-            if (fileName.EndsWith(extension))
-            {
-                fileName = fileName.Substring(0, fileName.Length - extension.Length);
-            }
-
-            return fileName;
-        }
-
-        /// <summary>
-        /// Provides the current location of file storage.
-        /// </summary>
-        /// <returns>Returns a string containing the current file save location data. Useful to change once.</returns>
-        private string GetFileLocation()
-        {
-            return AppDomain.CurrentDomain.BaseDirectory + "Files\\";
-        }
-
-        /// <summary>
-        /// Provides the encrypted extension.
-        /// </summary>
-        /// <returns>Returns the encrypted extension. Useful if the type ever needs to be changed or added to.</returns>
-        private string EncryptedExtension()
-        {
-            return ".encrypted";
-        }
-
-        /// <summary>
-        /// Provides the zip extension.
-        /// </summary>
-        /// <returns>Returns the zip extension. Useful if the type ever needs to be changed or added to.</returns>
-        private string ZipExtension()
-        {
-            return ".zip";
-        }
-
-        /// <summary>
-        /// Accepts a file and converts it into a byte array.
-        /// </summary>
-        /// <param name="file">The file to be converted.</param>
-        /// <returns>Returns the data in a byte array.</returns>
-        private byte[] FileToByteArray(HttpPostedFileBase file)
-        {
-            byte[] fileData = null;
-            using (var binaryReader = new BinaryReader(file.InputStream))
-            {
-                fileData = binaryReader.ReadBytes(file.ContentLength);
-                binaryReader.Close();
-            }
-
-            return fileData;
-        }
-
-        /// <summary>
-        /// Writes a file to the location generated from the file name and data.
-        /// </summary>
-        /// <param name="uniqueID">The unique ID of the file.</param>
-        /// <param name="fileName">The name of the file.</param>
-        /// <param name="fileBytes">The file data.</param>
-        private void SaveFile(Guid uniqueID, string fileName, byte[] fileBytes)
-        {
-            string fileLocation = GetPath(uniqueID, fileName);
-
-            System.IO.File.WriteAllBytes(fileLocation, fileBytes);
-        }
-
-        /// <summary>
-        /// Gets the full path of the file: location + file name.
-        /// </summary>
-        /// <param name="uniqueID">The ID of the file being looked for.</param>
-        /// <param name="fileName">The name of the file being looked for.</param>
-        /// <returns>Returns the path of the file.</returns>
-        private string GetPath(Guid uniqueID, string fileName)
-        {
-            return GetFileLocation() + uniqueID + "." + fileName;
-        }
-
-        /// <summary>
         /// Gets the file object from the bytes, name, and extension.
         /// </summary>
         /// <param name="fileName">The file name.</param>
@@ -536,62 +236,12 @@ namespace SisypheanSolutions.Controllers
         /// <returns>Returns the file.</returns>
         private ActionResult ReturnFile(string fileName, byte[] fileBytes)
         {
-            if(fileName.EndsWith(EncryptedExtension()))
+            if (fileName.EndsWith(FileExtensions.EncryptedExtension()))
             {
-                fileName = RemoveExtension(fileName, EncryptedExtension());
+                fileName = FileExtensions.RemoveExtension(fileName, FileExtensions.EncryptedExtension());
             }
 
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
-
-        /// <summary>
-        /// UTF8 encodes plain text.
-        /// </summary>
-        /// <param name="plainText"></param>
-        /// <returns></returns>
-        public static string Base64Encode(string plainText)
-        {
-            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-            return Convert.ToBase64String(plainTextBytes);
-        }
-
-        /// <summary>
-        /// Converts base 64 encoded data to UTF8 string.
-        /// </summary>
-        /// <param name="base64EncodedData"></param>
-        /// <returns></returns>
-        public static string Base64Decode(string base64EncodedData)
-        {
-            var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
-            return Encoding.UTF8.GetString(base64EncodedBytes);
-        }
-
-        /// <summary>
-        /// Generates the URL for the file download from the uniqueID parameter.
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="uniqueID">The unique ID associated with the file download.</param>
-        /// <returns>Returns a URL as a string.</returns>
-        private static string GenerateDownloadLink(HttpContextBase context, Guid uniqueID)
-        {
-            return context?.Request?.Url?.Authority + "/#/file/filedownload?uniqueID=" + uniqueID;
-        }
-
-        /// <summary>
-        /// Generates the file name for encrypted files.
-        /// </summary>
-        /// <param name="password"></param>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        private string SetEncryptedFileName(string password, string fileName)
-        {
-            //The extension is added twice. Once for password checking, once for file.
-            fileName = fileName + EncryptedExtension();
-            fileName = Base64Encode(EncryptString(fileName, password));
-            fileName = fileName + EncryptedExtension();
-
-            return fileName;
-        }
-        #endregion
     }
 }

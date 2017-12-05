@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
 
 namespace SisypheanSolutions.Utilities
 {
-    public static class Extensions
+    public static class StringExtensions
     {
         /// <summary>
         /// Replaces the first instance of a substring to the end of the first instance of a second substring.
@@ -19,8 +15,8 @@ namespace SisypheanSolutions.Utilities
         public static string ReplaceRange(this string input, string from, string to, string replacement = "")
         {
             int offset = to.Length;
-            int firstIndex = input.IndexOf(from);
-            int secondIndex = input.IndexOf(to, firstIndex);
+            int firstIndex = input.IndexOf(from, StringComparison.Ordinal);
+            int secondIndex = input.IndexOf(to, firstIndex, StringComparison.Ordinal);
 
             if (firstIndex == -1 || secondIndex == -1) return input;
 
